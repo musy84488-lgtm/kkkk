@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات المنصة - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-header-logo">
+                <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <h1>إعدادات المنصة</h1>
+            </div>
+            <button class="admin-logout" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                خروج
+            </button>
+        </div>
+
+        <div style="padding:20px;max-width:800px;margin:0 auto;">
+            <!-- Password Change -->
+            <div class="admin-card" style="margin-bottom:20px;">
+                <div class="admin-card-header">
+                    <div class="admin-card-title"><i class="fas fa-key" style="margin-left:8px;"></i>تغيير كلمة المرور</div>
+                </div>
+                <form onsubmit="return changePassword(event)">
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور الحالية</label>
+                        <input type="password" class="form-input" placeholder="أدخل كلمة المرور الحالية" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور الجديدة</label>
+                        <input type="password" class="form-input" placeholder="أدخل كلمة المرور الجديدة" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">تأكيد كلمة المرور الجديدة</label>
+                        <input type="password" class="form-input" placeholder="أعد إدخال كلمة المرور الجديدة" required>
+                    </div>
+                    <button type="submit" class="admin-btn admin-btn-primary">
+                        <i class="fas fa-save"></i> حفظ التغييرات
+                    </button>
+                </form>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--gray-lighter);">
+                    <p style="font-size:13px;color:var(--gray);margin-bottom:8px;">
+                        <i class="fas fa-info-circle" style="color:var(--primary);"></i>
+                        نسيت كلمة المرور؟
+                    </p>
+                    <a href="https://wa.me/963938626949?text=مرحباً،%20أريد%20استعادة%20كلمة%20المرور%20للوحة%20الإدارة" 
+                       target="_blank" 
+                       style="color:#25d366;font-size:14px;text-decoration:none;font-weight:600;">
+                        <i class="fab fa-whatsapp"></i>
+                        تواصل عبر واتساب +963 938 626 949
+                    </a>
+                </div>
+            </div>
+
+            <!-- Platform Info -->
+            <div class="admin-card" style="margin-bottom:20px;">
+                <div class="admin-card-header">
+                    <div class="admin-card-title"><i class="fas fa-info-circle" style="margin-left:8px;"></i>معلومات المنصة</div>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">اسم المنصة</span>
+                    <span class="profile-info-value">خطوة وشفاء</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">الإصدار</span>
+                    <span class="profile-info-value">2.0</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">المؤسس</span>
+                    <span class="profile-info-value">المعالج الفيزيائي محمد الحسين</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">المهندس التقني</span>
+                    <span class="profile-info-value">المهندس محمد الرفاعي</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">رقم الدعم</span>
+                    <span class="profile-info-value">+963 938 626 949</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/main.js"></script>
+    <script>
+        function changePassword(e) {
+            e.preventDefault();
+            showNotification('تم تغيير كلمة المرور بنجاح!', 'success');
+            return false;
+        }
+    </script>
+</body>
+</html>

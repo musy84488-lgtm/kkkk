@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطوة وشفاء - منصة العلاج الطبيعي المنزلي في سوريا</title>
+    <meta name="description" content="نوصلك بأفضل المعالجين الفيزيائيين المعتمدين في محافظتك للحصول على العلاج المنزلي في سوريا">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="/" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="/" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/" class="active">
+                <i class="fas fa-home"></i>
+                الرئيسية
+            </a>
+            <a href="pages/request.html">
+                <i class="fas fa-hand-holding-medical"></i>
+                اطلب معالجاً
+            </a>
+            <a href="pages/register.html">
+                <i class="fas fa-user-plus"></i>
+                سجّل كمعالج
+            </a>
+            <a href="pages/support.html">
+                <i class="fas fa-headset"></i>
+                الدعم الفني
+            </a>
+            <a href="pages/admin/login.html">
+                <i class="fas fa-lock"></i>
+                لوحة الإدارة
+            </a>
+        </nav>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">تخصصاتنا</div>
+            <div class="sidebar-nav">
+                <a href="#specialties"><i class="fas fa-bone"></i> عظام وعمود فقري</a>
+                <a href="#specialties"><i class="fas fa-brain"></i> أعصاب وشلل</a>
+                <a href="#specialties"><i class="fas fa-procedures"></i> تأهيل بعد الجراحة</a>
+                <a href="#specialties"><i class="fas fa-joint"></i> أمراض الروماتيزم</a>
+                <a href="#specialties"><i class="fas fa-child"></i> تأهيل الأطفال</a>
+            </div>
+        </div>
+        <div class="sidebar-contact">
+            <div class="sidebar-contact-name">المعالج الفيزيائي محمد الحسين</div>
+            <div class="sidebar-contact-role">مؤسس المنصة</div>
+            <a href="tel:0938626949" class="sidebar-contact-phone">
+                <i class="fas fa-phone"></i>
+                0938 626 949
+            </a>
+            <a href="https://wa.me/963938626949" class="sidebar-contact-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                واتساب
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-logo">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+        <h1>العلاج الطبيعي المنزلي<br><span>في جميع أنحاء سوريا</span></h1>
+        <p>نوصلك بمعالجين فيزيائيين معتمدين ومتخصصين يأتون إلى منزلك في محافظتك</p>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+            <a href="pages/request.html" class="btn btn-primary">اطلب معالجاً الآن</a>
+            <a href="pages/register.html" class="btn btn-outline">سجّل كمعالج فيزيائي</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-number">14</span>
+                <span class="hero-stat-label">محافظة مغطّاة</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number">6</span>
+                <span class="hero-stat-label">تخصصات طبية</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number">24/7</span>
+                <span class="hero-stat-label">استقبال الطلبات</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quran Verse -->
+    <div class="quran-verse">
+        <div class="quran-verse-text">وَإِذَا مَرِضْتُ فَهُوَ يَشْفِينِ</div>
+        <div class="quran-verse-ref">سورة الشعراء - الآية 80</div>
+    </div>
+
+    <!-- How It Works -->
+    <section class="section" id="how-it-works">
+        <h2 class="section-title">كيف تعمل المنصة؟</h2>
+        <p class="section-subtitle">ثلاث خطوات بسيطة للحصول على العلاج</p>
+        <div class="steps">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="step-number">الخطوة ١</div>
+                <h3>أرسل طلبك</h3>
+                <p>أدخل بياناتك ومحافظتك ووصف حالتك الطبية من خلال نموذج بسيط</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="step-number">الخطوة ٢</div>
+                <h3>نختار المعالج المناسب</h3>
+                <p>يقوم نظامنا الذكي بتحديد أفضل معالج معتمد في منطقتك بناءً على تخصصه</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="step-number">الخطوة ٣</div>
+                <h3>العلاج في منزلك</h3>
+                <p>يزورك المعالج في منزلك ويبدأ جلسات العلاج الطبيعي المتخصصة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties -->
+    <section class="section" id="specialties">
+        <h2 class="section-title">التخصصات المتاحة</h2>
+        <p class="section-subtitle">معالجون متخصصون في جميع مجالات العلاج الطبيعي</p>
+        <div class="specialties-grid">
+            <div class="specialty-item">
+                <i class="fas fa-bone"></i>
+                <span>عظام وعمود فقري</span>
+            </div>
+            <div class="specialty-item">
+                <i class="fas fa-brain"></i>
+                <span>أعصاب وشلل</span>
+            </div>
+            <div class="specialty-item">
+                <i class="fas fa-procedures"></i>
+                <span>تأهيل بعد الجراحة</span>
+            </div>
+            <div class="specialty-item">
+                <i class="fas fa-joint"></i>
+                <span>أمراض الروماتيزم</span>
+            </div>
+            <div class="specialty-item">
+                <i class="fas fa-child"></i>
+                <span>تأهيل الأطفال</span>
+            </div>
+            <div class="specialty-item">
+                <i class="fas fa-running"></i>
+                <span>إعادة تأهيل رياضي</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Provinces -->
+    <section class="section" id="provinces">
+        <h2 class="section-title">المحافظات المغطّاة</h2>
+        <p class="section-subtitle">نغطي جميع المحافظات السورية</p>
+        <div class="provinces-grid">
+            <div class="province-item">
+                <span>دمشق</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>ريف دمشق</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>حلب</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>حمص</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>حماة</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>اللاذقية</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>طرطوس</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>دير الزور</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>الرقة</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>الحسكة</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>إدلب</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>درعا</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>السويداء</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="province-item">
+                <span>القنيطرة</span>
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>هل تحتاج إلى علاج طبيعي؟</h2>
+        <p>لا تتأخر. أرسل طلبك الآن وسنتواصل معك في أقرب وقت ممكن</p>
+        <a href="pages/request.html" class="btn btn-primary" style="max-width:200px;">
+            <i class="fas fa-arrow-left"></i>
+            ابدأ الآن
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <span class="footer-logo-text">خطوة وشفاء</span>
+            <div class="footer-logo-icon">
+                <i class="fas fa-shoe-prints"></i>
+            </div>
+        </div>
+        <p class="footer-desc">منصة العلاج الطبيعي المنزلي<br>نوصلك بأفضل المعالجين الفيزيائيين المعتمدين في محافظتك للحصول على العلاج المنزلي في سوريا.</p>
+
+        <div style="margin-bottom:24px;">
+            <div class="footer-section-title">روابط سريعة</div>
+            <ul class="footer-links">
+                <li><a href="pages/request.html">اطلب معالجاً فيزيائياً</a></li>
+                <li><a href="pages/register.html">سجّل كمعالج فيزيائي</a></li>
+                <li><a href="pages/support.html">الدعم الفني</a></li>
+                <li><a href="pages/admin/login.html">لوحة الإدارة</a></li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <div class="footer-section-title">تخصصاتنا</div>
+            <ul class="footer-links">
+                <li><a href="#specialties">عظام وعمود فقري</a></li>
+                <li><a href="#specialties">أعصاب وشلل</a></li>
+                <li><a href="#specialties">تأهيل ما بعد الجراحة</a></li>
+                <li><a href="#specialties">أمراض الروماتيزم</a></li>
+                <li><a href="#specialties">تأهيل الأطفال</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact" style="margin-bottom:24px;">
+            <div class="footer-section-title">تواصل معنا</div>
+            <div class="footer-founder">
+                <div class="footer-founder-title">مؤسس المنصة</div>
+                <div class="footer-founder-name">المعالج الفيزيائي<br>محمد الحسين</div>
+                <a href="tel:0938626949" class="footer-founder-phone">
+                    <i class="fas fa-phone"></i>
+                    0938 626 949
+                </a>
+                <br>
+                <a href="https://wa.me/963938626949" class="footer-founder-phone" style="margin-top:6px;color:#25d366;" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    واتساب
+                </a>
+            </div>
+            <a href="pages/support.html" class="btn btn-primary" style="max-width:200px;font-size:14px;padding:10px 20px;">
+                <i class="fas fa-arrow-left"></i>
+                مركز الدعم الفني
+            </a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 خطوة وشفاء — جميع الحقوق محفوظة</p>
+            <p style="margin-top:4px;">سوريا — خدمة على مدار الساعة <span style="color:#25d366;">●</span></p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

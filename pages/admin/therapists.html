@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المعالجين - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-header-logo">
+                <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <h1>إدارة المعالجين</h1>
+            </div>
+            <button class="admin-logout" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                خروج
+            </button>
+        </div>
+
+        <div style="padding:20px;max-width:1200px;margin:0 auto;">
+            <div class="admin-card" style="margin-bottom:20px;">
+                <div class="admin-card-header">
+                    <div class="admin-card-title">قائمة المعالجين المسجلين</div>
+                    <a href="dashboard.html" style="color:var(--primary);font-size:14px;text-decoration:none;">
+                        <i class="fas fa-arrow-right"></i>
+                        العودة للوحة التحكم
+                    </a>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>المحافظة</th>
+                                <th>التخصص</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>د. خالد العبدالله</td>
+                                <td>0933xxxxxx</td>
+                                <td>دمشق</td>
+                                <td>عظام</td>
+                                <td><span class="admin-badge approved">معتمد</span></td>
+                                <td>
+                                    <button class="admin-btn admin-btn-sm admin-btn-primary">عرض</button>
+                                    <button class="admin-btn admin-btn-sm admin-btn-danger">تعطيل</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>د. فاطمة الزهراء</td>
+                                <td>0955xxxxxx</td>
+                                <td>حلب</td>
+                                <td>أعصاب</td>
+                                <td><span class="admin-badge pending">بانتظار التفعيل</span></td>
+                                <td>
+                                    <button class="admin-btn admin-btn-sm admin-btn-success">تفعيل</button>
+                                    <button class="admin-btn admin-btn-sm admin-btn-danger">رفض</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

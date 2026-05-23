@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروفايل المريض - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="../../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../../index.html">
+                <i class="fas fa-home"></i> الرئيسية
+            </a>
+            <a href="profile.html" class="active">
+                <i class="fas fa-user"></i> بروفايلي
+            </a>
+            <a href="appointments.html">
+                <i class="fas fa-calendar-alt"></i> مواعيدي
+            </a>
+            <a href="my-plan.html">
+                <i class="fas fa-clipboard-list"></i> خطتي العلاجية
+            </a>
+            <a href="../../pages/support.html">
+                <i class="fas fa-headset"></i> الدعم الفني
+            </a>
+        </nav>
+    </div>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="profile-name">أحمد محمد</div>
+        <div class="profile-role">مريض</div>
+    </div>
+
+    <!-- Profile Body -->
+    <div class="profile-body">
+        <!-- Personal Info -->
+        <div class="profile-card">
+            <h3><i class="fas fa-user-circle"></i> المعلومات الشخصية</h3>
+            <div class="profile-info-row">
+                <span class="profile-info-label">الاسم الكامل</span>
+                <span class="profile-info-value">أحمد محمد علي</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">رقم الهاتف</span>
+                <span class="profile-info-value">0933xxxxxx</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">المحافظة</span>
+                <span class="profile-info-value">دمشق</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">المنطقة</span>
+                <span class="profile-info-value">المزة</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">الحالة المرضية</span>
+                <span class="profile-info-value">عظام وعمود فقري</span>
+            </div>
+        </div>
+
+        <!-- Quick Menu -->
+        <div class="profile-card">
+            <h3><i class="fas fa-th-large"></i> الخيارات</h3>
+            <div class="profile-menu">
+                <a href="appointments.html" class="profile-menu-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>مواعيدي</span>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="my-plan.html" class="profile-menu-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>خطتي العلاجية</span>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="../../pages/request.html" class="profile-menu-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>طلب جلسة جديدة</span>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="edit-profile.html" class="profile-menu-item">
+                    <i class="fas fa-edit"></i>
+                    <span>تعديل البيانات</span>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="#" onclick="showNotification('تم تسجيل الخروج', 'success'); setTimeout(()=>window.location.href='../../index.html',1000); return false;" class="profile-menu-item" style="color:var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

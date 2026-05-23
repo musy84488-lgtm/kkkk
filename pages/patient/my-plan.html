@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطتي العلاجية - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            <a href="../../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="profile.html"><i class="fas fa-user"></i> بروفايلي</a>
+            <a href="appointments.html"><i class="fas fa-calendar-alt"></i> مواعيدي</a>
+            <a href="my-plan.html" class="active"><i class="fas fa-clipboard-list"></i> خطتي العلاجية</a>
+            <a href="../../pages/support.html"><i class="fas fa-headset"></i> الدعم الفني</a>
+        </nav>
+    </div>
+
+    <div class="page-header">
+        <div class="card-icon" style="margin-bottom:12px;">
+            <i class="fas fa-clipboard-list"></i>
+        </div>
+        <h1>خطتي العلاجية</h1>
+        <p>خطة مخصصة لحالتك - سهلة وبسيطة</p>
+    </div>
+
+    <div style="padding:20px;max-width:600px;margin:0 auto;">
+        <!-- Plan Header -->
+        <div class="treatment-plan">
+            <div class="treatment-plan-header">
+                <div class="treatment-plan-icon">
+                    <i class="fas fa-bone"></i>
+                </div>
+                <div>
+                    <div class="treatment-plan-title">علاج آلام الظهر</div>
+                    <div class="treatment-plan-subtitle">خطة مخصصة لك - ٤ خطوات</div>
+                </div>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="treatment-step">
+                <div class="treatment-step-number">١</div>
+                <div class="treatment-step-content">
+                    <h4>التدفئة والاسترخاء 🌡️</h4>
+                    <p style="font-size:15px;line-height:1.9;">
+                        قبل ما تبلّش التمارين، حط كمّادة دافية على ظهرك لمدة ١٠-١٥ دقيقة. 
+                        هالشي بيساعد العضلات ترتخي وتصير جاهزة للتمارين.
+                        <br><br>
+                        <strong>💡 تذكير:</strong> استخدم كمّادة دافية (مي سخن بمنشفة) ولا تستخدم شي سخن كتير!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Illustration 1 -->
+            <div class="treatment-illustration">
+                <svg viewBox="0 0 300 150" style="max-width:280px;">
+                    <!-- Person lying down with hot compress -->
+                    <ellipse cx="150" cy="75" rx="80" ry="30" fill="#e6f2f8" opacity="0.5"/>
+                    <!-- Body -->
+                    <rect x="100" y="55" width="100" height="40" rx="20" fill="none" stroke="#0066a1" stroke-width="2"/>
+                    <!-- Head -->
+                    <circle cx="90" cy="75" r="18" fill="#e6f2f8" stroke="#0066a1" stroke-width="2"/>
+                    <!-- Hot compress on back -->
+                    <rect x="120" y="60" width="50" height="25" rx="5" fill="#ff6b6b" opacity="0.3" stroke="#ff6b6b" stroke-width="2"/>
+                    <text x="150" y="72" text-anchor="middle" fill="#ff6b6b" font-size="10" font-family="Tajawal">🔥 دافي</text>
+                    <!-- Steam lines -->
+                    <path d="M130 50 Q135 40 140 50" fill="none" stroke="#ff6b6b" stroke-width="1.5" opacity="0.6"/>
+                    <path d="M150 48 Q155 38 160 48" fill="none" stroke="#ff6b6b" stroke-width="1.5" opacity="0.6"/>
+                    <path d="M170 50 Q175 40 180 50" fill="none" stroke="#ff6b6b" stroke-width="1.5" opacity="0.6"/>
+                    <!-- Timer -->
+                    <circle cx="240" cy="60" r="20" fill="none" stroke="#0066a1" stroke-width="2"/>
+                    <text x="240" y="65" text-anchor="middle" fill="#0066a1" font-size="11" font-family="Tajawal">١٥ د</text>
+                    <text x="150" y="135" text-anchor="middle" fill="#0066a1" font-size="12" font-family="Tajawal">كمّادة دافية على الظهر</text>
+                </svg>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="treatment-step">
+                <div class="treatment-step-number">٢</div>
+                <div class="treatment-step-content">
+                    <h4>تمارين الإطالة 🧘</h4>
+                    <p style="font-size:15px;line-height:1.9;">
+                        هلأ نبلّش بالإطالة البطيئة:
+                        <br><br>
+                        <strong>١.</strong> اقعد على الأرض ومدّ رجليك قدّامك
+                        <br>
+                        <strong>٢.</strong> انحنى ببطء لقدام ومد إيديك لتمسك رجلك
+                        <br>
+                        <strong>٣.</strong> خلّيك بهالوضعية لمدة ٣٠ ثانية
+                        <br>
+                        <strong>٤.</strong> ارجع ببطء وكرّر ٣ مرّات
+                        <br><br>
+                        <strong>⚠️ مهم:</strong> ما تتسرّع! الإطالة البطيئة أحسن من السريعة.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Illustration 2 -->
+            <div class="treatment-illustration">
+                <svg viewBox="0 0 300 180" style="max-width:280px;">
+                    <!-- Stretching illustration -->
+                    <ellipse cx="150" cy="90" rx="100" ry="50" fill="#e6f2f8" opacity="0.3"/>
+                    <!-- Person sitting -->
+                    <circle cx="150" cy="50" r="15" fill="#e6f2f8" stroke="#0066a1" stroke-width="2"/>
+                    <!-- Body leaning forward -->
+                    <path d="M150 65 L150 100" stroke="#0066a1" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Arms reaching -->
+                    <path d="M150 80 L120 120" stroke="#0066a1" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M150 80 L180 120" stroke="#0066a1" stroke-width="2.5" stroke-linecap="round"/>
+                    <!-- Legs extended -->
+                    <path d="M150 100 L110 140" stroke="#0066a1" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M150 100 L190 140" stroke="#0066a1" stroke-width="2.5" stroke-linecap="round"/>
+                    <!-- Arrow showing stretch direction -->
+                    <path d="M200 60 L200 100" stroke="#00a86b" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#00a86b"/>
+                        </marker>
+                    </defs>
+                    <!-- Timer -->
+                    <circle cx="60" cy="140" r="22" fill="none" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="60" y="145" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="Tajawal">٣٠ ث</text>
+                    <text x="150" y="170" text-anchor="middle" fill="#0066a1" font-size="12" font-family="Tajawal">مدّ جسمك ببطء لقدام</text>
+                </svg>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="treatment-step">
+                <div class="treatment-step-number">٣</div>
+                <div class="treatment-step-content">
+                    <h4>تقوية عضلات الظهر 💪</h4>
+                    <p style="font-size:15px;line-height:1.9;">
+                        بعد ما إطّلت، هلأ نقوّي الظهر:
+                        <br><br>
+                        <strong>١.</strong> استلقِ على بطنك (على وجهك)
+                        <br>
+                        <strong>٢.</strong> ارفع راسك وكتافك شوي لفوق
+                        <br>
+                        <strong>٣.</strong> خلّيك بهالوضعية ٥ ثواني
+                        <br>
+                        <strong>٤.</strong> نزّل راسك ببطء وكرّر ١٠ مرّات
+                        <br><br>
+                        <strong>💡 نصيحة:</strong> ما ترفع راسك كتير! بس شوي لحتى تحسّ بظهرك يشتغل.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Illustration 3 -->
+            <div class="treatment-illustration">
+                <svg viewBox="0 0 300 160" style="max-width:280px;">
+                    <!-- Back strengthening illustration -->
+                    <ellipse cx="150" cy="80" rx="100" ry="50" fill="#e6f2f8" opacity="0.3"/>
+                    <!-- Person on stomach -->
+                    <ellipse cx="150" cy="100" rx="50" ry="20" fill="#e6f2f8" stroke="#0066a1" stroke-width="2"/>
+                    <!-- Head raised -->
+                    <circle cx="150" cy="65" r="15" fill="#e6f2f8" stroke="#0066a1" stroke-width="2"/>
+                    <!-- Arms -->
+                    <path d="M130 85 L100 95" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M170 85 L200 95" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Legs -->
+                    <path d="M120 110 L100 130" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M180 110 L200 130" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Back muscles highlighted -->
+                    <path d="M130 80 Q150 70 170 80" fill="none" stroke="#00a86b" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Rep counter -->
+                    <circle cx="60" cy="130" r="22" fill="none" stroke="#00a86b" stroke-width="2"/>
+                    <text x="60" y="135" text-anchor="middle" fill="#00a86b" font-size="11" font-family="Tajawal">١٠ مرّات</text>
+                    <text x="150" y="150" text-anchor="middle" fill="#0066a1" font-size="12" font-family="Tajawal">ارفع راسك وكتافك شوي</text>
+                </svg>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="treatment-step">
+                <div class="treatment-step-number">٤</div>
+                <div class="treatment-step-content">
+                    <h4>تصحيح الوضعية 🪑</h4>
+                    <p style="font-size:15px;line-height:1.9;">
+                        آخر شي، لازم تنتبه لوضعيتك اليومية:
+                        <br><br>
+                        <strong>📌 وقت الجلوس:</strong>
+                        <br>
+                        - ظهرك لازم يلمس ظهر الكرسي
+                        <br>
+                        - رجليك على الأرض (ما تتقاطع)
+                        <br>
+                        - الشاشة بمستوى عيونك
+                        <br><br>
+                        <strong>📌 وقت النوم:</strong>
+                        <br>
+                        - نام على جنبك مع مخدة بين رجليك
+                        <br>
+                        - أو نام على ظهرك مع مخدة تحت ركبتك
+                        <br><br>
+                        <strong>📌 وقت الوقوف:</strong>
+                        <br>
+                        - وزّن وزنك على الرجلين بالتساوي
+                        <br>
+                        - ما تثنّي ظهرك كتير لقدام
+                    </p>
+                </div>
+            </div>
+
+            <!-- Illustration 4 -->
+            <div class="treatment-illustration">
+                <svg viewBox="0 0 300 200" style="max-width:280px;">
+                    <!-- Posture correction illustration -->
+                    <!-- Good posture -->
+                    <g transform="translate(50, 20)">
+                        <rect x="0" y="0" width="90" height="160" rx="10" fill="#e6f2f8" opacity="0.3" stroke="#0066a1" stroke-width="1"/>
+                        <!-- Person sitting correctly -->
+                        <circle cx="45" cy="30" r="12" fill="#e6f2f8" stroke="#0066a1" stroke-width="2"/>
+                        <path d="M45 42 L45 80" stroke="#0066a1" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Straight back -->
+                        <path d="M45 50 L45 75" stroke="#00a86b" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Chair back support -->
+                        <path d="M30 50 L30 90" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M60 50 L60 90" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Legs on floor -->
+                        <path d="M35 80 L25 110" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M55 80 L65 110" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Floor -->
+                        <line x1="10" y1="110" x2="80" y2="110" stroke="#0066a1" stroke-width="2"/>
+                        <text x="45" y="135" text-anchor="middle" fill="#00a86b" font-size="11" font-family="Tajawal">✓ وضعية صحيحة</text>
+                    </g>
+
+                    <!-- Bad posture -->
+                    <g transform="translate(160, 20)">
+                        <rect x="0" y="0" width="90" height="160" rx="10" fill="#fff5f5" opacity="0.3" stroke="#dc2626" stroke-width="1"/>
+                        <!-- Person slouching -->
+                        <circle cx="45" cy="35" r="12" fill="#fff5f5" stroke="#dc2626" stroke-width="2"/>
+                        <path d="M45 47 L50 85" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Curved back -->
+                        <path d="M40 55 Q55 70 50 85" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
+                        <!-- Legs crossed -->
+                        <path d="M40 85 L30 110" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M50 85 L70 100 L60 110" stroke="#dc2626" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <!-- Floor -->
+                        <line x1="10" y1="110" x2="80" y2="110" stroke="#dc2626" stroke-width="2"/>
+                        <text x="45" y="135" text-anchor="middle" fill="#dc2626" font-size="11" font-family="Tajawal">✗ وضعية خاطئة</text>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div style="background:linear-gradient(135deg, var(--primary-light) 0%, rgba(0,168,107,0.1) 100%);border-radius:var(--radius-lg);padding:20px;margin-top:20px;">
+                <h4 style="font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+                    <i class="fas fa-chart-line" style="color:var(--primary);"></i>
+                    تقدّمك بالعلاج
+                </h4>
+                <div style="background:white;border-radius:var(--radius);padding:12px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">
+                        <span>الجلسات المنجزة</span>
+                        <span style="font-weight:700;color:var(--primary);">٢ من ٨</span>
+                    </div>
+                    <div style="background:var(--gray-lighter);border-radius:10px;height:8px;overflow:hidden;">
+                        <div style="background:linear-gradient(90deg, var(--primary), var(--secondary));width:25%;height:100%;border-radius:10px;transition:width 0.5s;"></div>
+                    </div>
+                </div>
+                <div style="background:white;border-radius:var(--radius);padding:12px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">
+                        <span>التمارين اليومية</span>
+                        <span style="font-weight:700;color:var(--secondary);">٥ أيام متتالية 🔥</span>
+                    </div>
+                    <div style="display:flex;gap:6px;justify-content:center;">
+                        <div style="width:30px;height:30px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;">✓</div>
+                        <div style="width:30px;height:30px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;">✓</div>
+                        <div style="width:30px;height:30px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;">✓</div>
+                        <div style="width:30px;height:30px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;">✓</div>
+                        <div style="width:30px;height:30px;background:var(--secondary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;">✓</div>
+                        <div style="width:30px;height:30px;background:var(--gray-lighter);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:12px;">؟</div>
+                        <div style="width:30px;height:30px;background:var(--gray-lighter);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:12px;">؟</div>
+                    </div>
+                    <p style="text-align:center;font-size:12px;color:var(--gray);margin-top:8px;">س-ث-ر-خ-ج-س-ح</p>
+                </div>
+            </div>
+
+            <!-- Important Notes -->
+            <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:var(--radius-lg);padding:16px;margin-top:16px;">
+                <h4 style="font-size:15px;font-weight:700;margin-bottom:10px;color:#92400e;display:flex;align-items:center;gap:8px;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    ملاحظات مهمة
+                </h4>
+                <ul style="font-size:14px;color:#78350f;line-height:1.9;padding-right:20px;">
+                    <li>اعمل التمارين يومياً حتى لو ٥ دقايق بس</li>
+                    <li>إذا حسّيت بألم زايد، وقف فوراً وتواصل مع المعالج</li>
+                    <li>الانتظام أهم من الكمّية - كل يوم شوي أحسن من مرة كتير</li>
+                    <li>شرب المي كتير بيساعد العضلات ترتخي</li>
+                </ul>
+            </div>
+
+            <!-- Contact Therapist -->
+            <div style="text-align:center;margin-top:20px;">
+                <a href="https://wa.me/963938626949" target="_blank" class="btn btn-whatsapp" style="max-width:280px;">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل مع المعالج
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

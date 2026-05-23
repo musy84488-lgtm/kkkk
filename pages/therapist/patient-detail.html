@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المريض - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon"><i class="fas fa-shoe-prints"></i></div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            <a href="../../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="profile.html"><i class="fas fa-user-md"></i> بروفايلي</a>
+            <a href="appointments.html"><i class="fas fa-calendar-alt"></i> مواعيدي</a>
+            <a href="patients.html" class="active"><i class="fas fa-users"></i> مرضاي</a>
+        </nav>
+    </div>
+
+    <div class="profile-header">
+        <div class="profile-avatar"><i class="fas fa-user"></i></div>
+        <div class="profile-name">أحمد محمد</div>
+        <div class="profile-role">مريض - عظام وعمود فقري</div>
+    </div>
+
+    <div class="profile-body">
+        <div class="profile-card">
+            <h3><i class="fas fa-info-circle"></i> المعلومات</h3>
+            <div class="profile-info-row">
+                <span class="profile-info-label">الهاتف</span>
+                <span class="profile-info-value">0933xxxxxx</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">المحافظة</span>
+                <span class="profile-info-value">دمشق - المزة</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">الحالة</span>
+                <span class="profile-info-value">آلام أسفل الظهر المزمنة</span>
+            </div>
+            <div class="profile-info-row">
+                <span class="profile-info-label">تاريخ التسجيل</span>
+                <span class="profile-info-value">15 مايو 2026</span>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <h3><i class="fas fa-calendar-alt"></i> الجلسات</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="background:var(--bg);border-radius:var(--radius);padding:12px;">
+                    <div style="font-weight:700;">الجلسة 1</div>
+                    <div style="font-size:13px;color:var(--gray);">11 مايو 2026 - تمت</div>
+                </div>
+                <div style="background:var(--bg);border-radius:var(--radius);padding:12px;">
+                    <div style="font-weight:700;">الجلسة 2</div>
+                    <div style="font-size:13px;color:var(--gray);">18 مايو 2026 - تمت</div>
+                </div>
+                <div style="background:rgba(0,168,107,0.1);border-radius:var(--radius);padding:12px;border:1px solid rgba(0,168,107,0.2);">
+                    <div style="font-weight:700;color:var(--secondary);">الجلسة 3 (قادمة)</div>
+                    <div style="font-size:13px;color:var(--secondary);">25 مايو 2026 - 10:00 ص</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <h3><i class="fas fa-clipboard-list"></i> الخطة العلاجية</h3>
+            <p style="color:var(--gray);font-size:14px;margin-bottom:12px;">الخطة المُعيّنة: علاج العمود الفقري</p>
+            <a href="../../pages/patient/my-plan.html" class="btn btn-primary" style="max-width:100%;font-size:14px;padding:10px;">
+                <i class="fas fa-eye"></i> عرض الخطة الكاملة
+            </a>
+        </div>
+
+        <div style="display:flex;gap:10px;">
+            <a href="https://wa.me/963933xxxxxx" target="_blank" class="btn btn-whatsapp" style="flex:1;">
+                <i class="fab fa-whatsapp"></i> واتساب
+            </a>
+            <a href="tel:0933xxxxxx" class="btn btn-call" style="flex:1;">
+                <i class="fas fa-phone"></i> اتصال
+            </a>
+        </div>
+    </div>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

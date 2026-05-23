@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المؤسسين - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-header-logo">
+                <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <h1>إدارة المؤسسين</h1>
+            </div>
+            <button class="admin-logout" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                خروج
+            </button>
+        </div>
+
+        <div style="padding:20px;max-width:800px;margin:0 auto;">
+            <div class="admin-card" style="margin-bottom:20px;">
+                <div class="admin-card-header">
+                    <div class="admin-card-title">صور المؤسسين - صفحة الدعم الفني</div>
+                </div>
+                <p style="color:var(--gray);font-size:14px;margin-bottom:20px;">
+                    يمكنك هنا تغيير صور المؤسسين التي تظهر في صفحة الدعم الفني. اضغط على الصورة لتغييرها.
+                </p>
+
+                <!-- Founder 1: محمد الحسين -->
+                <div style="margin-bottom:24px;">
+                    <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">
+                        <i class="fas fa-user-md" style="color:var(--primary);margin-left:8px;"></i>
+                        المعالج الفيزيائي محمد الحسين
+                    </h3>
+                    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
+                        <div style="width:100px;height:100px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid var(--primary);">
+                            <img id="founder1Img" src="" alt="محمد الحسين" style="width:100%;height:100%;object-fit:cover;display:none;">
+                            <i id="founder1Icon" class="fas fa-user" style="font-size:40px;color:var(--primary);"></i>
+                        </div>
+                        <div>
+                            <input type="file" id="founder1Input" accept="image/*" style="display:none;" onchange="previewImage(this, 'founder1Img'); document.getElementById('founder1Icon').style.display='none';">
+                            <button class="admin-btn admin-btn-primary" onclick="document.getElementById('founder1Input').click()">
+                                <i class="fas fa-camera"></i> اختيار صورة
+                            </button>
+                            <p style="font-size:12px;color:var(--gray);margin-top:6px;">الصورة المثالية: 400×400 بكسل</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الاسم الظاهر</label>
+                        <input type="text" class="form-input" value="المعالج الفيزيائي محمد الحسين">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الوصف</label>
+                        <textarea class="form-textarea" rows="2">خبير في العلاج الطبيعي والتأهيل، مؤسس منصة خطوة وشفاء.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-input" value="0938626949">
+                    </div>
+                </div>
+
+                <!-- Founder 2: محمد الرفاعي -->
+                <div style="margin-bottom:24px;padding-top:24px;border-top:1px solid var(--gray-lighter);">
+                    <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">
+                        <i class="fas fa-laptop-code" style="color:var(--primary);margin-left:8px;"></i>
+                        المهندس محمد الرفاعي
+                    </h3>
+                    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
+                        <div style="width:100px;height:100px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid var(--primary);">
+                            <img id="founder2Img" src="" alt="محمد الرفاعي" style="width:100%;height:100%;object-fit:cover;display:none;">
+                            <i id="founder2Icon" class="fas fa-user" style="font-size:40px;color:var(--primary);"></i>
+                        </div>
+                        <div>
+                            <input type="file" id="founder2Input" accept="image/*" style="display:none;" onchange="previewImage(this, 'founder2Img'); document.getElementById('founder2Icon').style.display='none';">
+                            <button class="admin-btn admin-btn-primary" onclick="document.getElementById('founder2Input').click()">
+                                <i class="fas fa-camera"></i> اختيار صورة
+                            </button>
+                            <p style="font-size:12px;color:var(--gray);margin-top:6px;">الصورة المثالية: 400×400 بكسل</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الاسم الظاهر</label>
+                        <input type="text" class="form-input" value="المهندس محمد الرفاعي">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الوصف</label>
+                        <textarea class="form-textarea" rows="2">المسؤول التقني عن المنصة، يشرف على التطوير والصيانة.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-input" value="0967768408">
+                    </div>
+                </div>
+
+                <button class="btn btn-action" onclick="showNotification('تم حفظ التغييرات بنجاح!', 'success')">
+                    <i class="fas fa-save"></i> حفظ التغييرات
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

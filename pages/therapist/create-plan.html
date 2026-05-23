@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء خطة علاجية - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon"><i class="fas fa-shoe-prints"></i></div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            <a href="../../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="profile.html"><i class="fas fa-user-md"></i> بروفايلي</a>
+            <a href="appointments.html"><i class="fas fa-calendar-alt"></i> مواعيدي</a>
+            <a href="patients.html"><i class="fas fa-users"></i> مرضاي</a>
+            <a href="treatment-plans.html" class="active"><i class="fas fa-clipboard-list"></i> الخطط العلاجية</a>
+        </nav>
+    </div>
+
+    <div class="page-header">
+        <h1>إنشاء خطة علاجية</h1>
+        <p>صمّم خطة مخصصة لمريضك</p>
+    </div>
+
+    <div class="form-container">
+        <form onsubmit="showNotification('تم إنشاء الخطة بنجاح!', 'success'); setTimeout(()=>window.location.href='treatment-plans.html',1000); return false;">
+            <div class="form-group">
+                <label class="form-label">اسم المريض</label>
+                <select class="form-select">
+                    <option>أحمد محمد</option>
+                    <option>سارة علي</option>
+                    <option>محمد خالد</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">نوع الحالة</label>
+                <select class="form-select">
+                    <option>عظام وعمود فقري</option>
+                    <option>أعصاب وشلل</option>
+                    <option>تأهيل بعد الجراحة</option>
+                    <option>روماتيزم</option>
+                    <option>تأهيل أطفال</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">عدد الجلسات المقترح</label>
+                <input type="number" class="form-input" value="8" min="1" max="20">
+            </div>
+            <div class="form-group">
+                <label class="form-label">الخطوة 1</label>
+                <input type="text" class="form-input" placeholder="عنوان الخطوة">
+                <textarea class="form-textarea" style="margin-top:8px;min-height:60px;" placeholder="وصف الخطوة بالتفصيل..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">الخطوة 2</label>
+                <input type="text" class="form-input" placeholder="عنوان الخطوة">
+                <textarea class="form-textarea" style="margin-top:8px;min-height:60px;" placeholder="وصف الخطوة بالتفصيل..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">الخطوة 3</label>
+                <input type="text" class="form-input" placeholder="عنوان الخطوة">
+                <textarea class="form-textarea" style="margin-top:8px;min-height:60px;" placeholder="وصف الخطوة بالتفصيل..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">ملاحظات خاصة للمريض</label>
+                <textarea class="form-textarea" placeholder="نصائح وإرشادات خاصة..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-action">
+                <i class="fas fa-plus-circle"></i> إنشاء الخطة
+            </button>
+        </form>
+    </div>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

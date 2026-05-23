@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل معالج فيزيائي - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html">
+                <i class="fas fa-home"></i>
+                الرئيسية
+            </a>
+            <a href="request.html">
+                <i class="fas fa-hand-holding-medical"></i>
+                اطلب معالجاً
+            </a>
+            <a href="register.html" class="active">
+                <i class="fas fa-user-plus"></i>
+                سجّل كمعالج
+            </a>
+            <a href="support.html">
+                <i class="fas fa-headset"></i>
+                الدعم الفني
+            </a>
+            <a href="admin/login.html">
+                <i class="fas fa-lock"></i>
+                لوحة الإدارة
+            </a>
+        </nav>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>تسجيل معالج فيزيائي</h1>
+        <p>انضم إلى شبكة معالجينا المعتمدين وقدّم خدماتك للمرضى في منطقتك</p>
+    </div>
+
+    <!-- Form -->
+    <div class="form-container">
+        <div class="form-note">
+            <strong>ملاحظة:</strong> سيتم مراجعة طلبك من قبل الإدارة قبل تفعيل حسابك
+        </div>
+
+        <form id="registerForm" onsubmit="return handleRegisterSubmit(event)">
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    الاسم الكامل
+                </label>
+                <input type="text" class="form-input" placeholder="الاسم الكامل" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    رقم الهاتف
+                </label>
+                <input type="tel" class="form-input" placeholder="09xxxxxxxx" required pattern="09[0-9]{8}">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    المحافظة
+                </label>
+                <select class="form-select" required>
+                    <option value="">اختر المحافظة</option>
+                    <option value="damascus">دمشق</option>
+                    <option value="rif-damascus">ريف دمشق</option>
+                    <option value="aleppo">حلب</option>
+                    <option value="homs">حمص</option>
+                    <option value="hama">حماة</option>
+                    <option value="latakia">اللاذقية</option>
+                    <option value="tartous">طرطوس</option>
+                    <option value="deir-ezzor">دير الزور</option>
+                    <option value="raqqa">الرقة</option>
+                    <option value="hasakah">الحسكة</option>
+                    <option value="idlib">إدلب</option>
+                    <option value="daraa">درعا</option>
+                    <option value="sweida">السويداء</option>
+                    <option value="quneitra">القنيطرة</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    المنطقة / الحي
+                </label>
+                <input type="text" class="form-input" placeholder="مثال: المزة، الشعلان" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="required">*</span>
+                    التخصص
+                </label>
+                <select class="form-select" required>
+                    <option value="">اختر التخصص</option>
+                    <option value="spine">عظام وعمود فقري</option>
+                    <option value="nerve">أعصاب وشلل</option>
+                    <option value="post-surgery">تأهيل بعد الجراحة</option>
+                    <option value="rheumatism">أمراض الروماتيزم</option>
+                    <option value="children">تأهيل الأطفال</option>
+                    <option value="sports">إعادة تأهيل رياضي</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-checkbox">
+                    <input type="checkbox" checked>
+                    <span>أوفّر خدمة الزيارات المنزلية</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">ملاحظات (شهادات، خبرات، إلخ)</label>
+                <textarea class="form-textarea" placeholder="أذكر خبراتك وشهاداتك وسنوات العمل..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-action">
+                <i class="fas fa-paper-plane"></i>
+                إرسال طلب التسجيل
+            </button>
+        </form>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            if (validateForm('registerForm')) {
+                showNotification('تم إرسال طلب التسجيل! سيتم مراجعته من قبل الإدارة', 'success');
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 2000);
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

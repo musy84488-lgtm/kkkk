@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل البيانات - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon"><i class="fas fa-shoe-prints"></i></div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            <a href="../../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="profile.html"><i class="fas fa-user-md"></i> بروفايلي</a>
+            <a href="appointments.html"><i class="fas fa-calendar-alt"></i> مواعيدي</a>
+            <a href="patients.html"><i class="fas fa-users"></i> مرضاي</a>
+            <a href="treatment-plans.html"><i class="fas fa-clipboard-list"></i> الخطط العلاجية</a>
+        </nav>
+    </div>
+
+    <div class="page-header">
+        <h1>تعديل البيانات</h1>
+        <p>حدّث معلوماتك المهنية</p>
+    </div>
+
+    <div class="form-container">
+        <form onsubmit="showNotification('تم حفظ التغييرات!', 'success'); setTimeout(()=>window.location.href='profile.html',1000); return false;">
+            <div class="form-group">
+                <label class="form-label">الاسم الكامل</label>
+                <input type="text" class="form-input" value="د. خالد العبدالله">
+            </div>
+            <div class="form-group">
+                <label class="form-label">رقم الهاتف</label>
+                <input type="tel" class="form-input" value="0933xxxxxx">
+            </div>
+            <div class="form-group">
+                <label class="form-label">التخصص</label>
+                <select class="form-select">
+                    <option value="spine" selected>عظام وعمود فقري</option>
+                    <option value="nerve">أعصاب وشلل</option>
+                    <option value="post-surgery">تأهيل بعد الجراحة</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">سنوات الخبرة</label>
+                <input type="number" class="form-input" value="8">
+            </div>
+            <div class="form-group">
+                <label class="form-label">نبذة مهنية</label>
+                <textarea class="form-textarea" rows="3">خبير في علاج آلام العمود الفقري والتأهيل الحركي...</textarea>
+            </div>
+            <button type="submit" class="btn btn-action">
+                <i class="fas fa-save"></i> حفظ التغييرات
+            </button>
+        </form>
+    </div>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

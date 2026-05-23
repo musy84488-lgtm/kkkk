@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المواعيد - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-header-logo">
+                <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <h1>إدارة المواعيد</h1>
+            </div>
+            <button class="admin-logout" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                خروج
+            </button>
+        </div>
+
+        <div style="padding:20px;max-width:1200px;margin:0 auto;">
+            <!-- Calendar View Toggle -->
+            <div class="admin-card" style="margin-bottom:20px;">
+                <div style="display:flex;gap:10px;margin-bottom:16px;">
+                    <button class="admin-btn admin-btn-primary" style="flex:1;">اليوم</button>
+                    <button class="admin-btn" style="flex:1;background:var(--bg);color:var(--dark);">هذا الأسبوع</button>
+                    <button class="admin-btn" style="flex:1;background:var(--bg);color:var(--dark);">هذا الشهر</button>
+                </div>
+            </div>
+
+            <!-- Appointments List -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <div class="admin-card-title">مواعيد اليوم</div>
+                    <a href="dashboard.html" style="color:var(--primary);font-size:14px;text-decoration:none;">
+                        <i class="fas fa-arrow-right"></i>
+                        العودة
+                    </a>
+                </div>
+
+                <!-- Appointment Card -->
+                <div class="appointment-card">
+                    <div class="appointment-header">
+                        <div class="appointment-patient">أحمد محمد</div>
+                        <span class="appointment-status" style="background:rgba(245,158,11,0.1);color:#f59e0b;">بانتظار التأكيد</span>
+                    </div>
+                    <div class="appointment-details">
+                        <div class="appointment-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>دمشق - المزة</span>
+                        </div>
+                        <div class="appointment-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>10:00 صباحاً</span>
+                        </div>
+                        <div class="appointment-detail">
+                            <i class="fas fa-user-md"></i>
+                            <span>د. خالد العبدالله</span>
+                        </div>
+                        <div class="appointment-detail">
+                            <i class="fas fa-bone"></i>
+                            <span>عظام وعمود فقري</span>
+                        </div>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="admin-btn admin-btn-success" onclick="updateAppointmentStatus(1, 'confirmed')">
+                            <i class="fas fa-check"></i> تأكيد
+                        </button>
+                        <button class="admin-btn admin-btn-danger" onclick="updateAppointmentStatus(1, 'cancelled')">
+                            <i class="fas fa-times"></i> إلغاء
+                        </button>
+                        <button class="admin-btn admin-btn-primary">
+                            <i class="fas fa-calendar-plus"></i> إعادة جدولة
+                        </button>
+                    </div>
+                </div>
+
+                <div class="appointment-card confirmed">
+                    <div class="appointment-header">
+                        <div class="appointment-patient">سارة علي</div>
+                        <span class="appointment-status" style="background:rgba(0,168,107,0.1);color:#00a86b;">مؤكد</span>
+                    </div>
+                    <div class="appointment-details">
+                        <div class="appointment-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>حلب - السكري</span>
+                        </div>
+                        <div class="appointment-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>2:00 مساءً</span>
+                        </div>
+                        <div class="appointment-detail">
+                            <i class="fas fa-user-md"></i>
+                            <span>د. فاطمة الزهراء</span>
+                        </div>
+                        <div class="appointment-detail">
+                            <i class="fas fa-brain"></i>
+                            <span>أعصاب وشلل</span>
+                        </div>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="admin-btn admin-btn-primary" onclick="updateAppointmentStatus(2, 'completed')">
+                            <i class="fas fa-check-double"></i> تم الإنجاز
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

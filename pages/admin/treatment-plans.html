@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخطط العلاجية - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-header-logo">
+                <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <h1>الخطط العلاجية</h1>
+            </div>
+            <button class="admin-logout" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                خروج
+            </button>
+        </div>
+
+        <div style="padding:20px;max-width:1200px;margin:0 auto;">
+            <div class="admin-card" style="margin-bottom:20px;">
+                <div class="admin-card-header">
+                    <div class="admin-card-title">الخطط العلاجية الجاهزة</div>
+                    <a href="dashboard.html" style="color:var(--primary);font-size:14px;text-decoration:none;">
+                        <i class="fas fa-arrow-right"></i>
+                        العودة
+                    </a>
+                </div>
+                <p style="color:var(--gray);font-size:14px;margin-bottom:20px;">
+                    اختر الحالة المرضية لعرض الخطة العلاجية الجاهزة مع الرسومات التوضيحية
+                </p>
+
+                <!-- Treatment Plan Cards -->
+                <div style="display:grid;gap:16px;">
+                    <!-- Spine Plan -->
+                    <div class="treatment-plan">
+                        <div class="treatment-plan-header">
+                            <div class="treatment-plan-icon">
+                                <i class="fas fa-bone"></i>
+                            </div>
+                            <div>
+                                <div class="treatment-plan-title">خطة علاج العمود الفقري</div>
+                                <div class="treatment-plan-subtitle">4 خطوات علاجية</div>
+                            </div>
+                        </div>
+
+                        <div class="treatment-illustration">
+                            <svg viewBox="0 0 200 120" style="max-width:200px;">
+                                <!-- Spine illustration -->
+                                <rect x="85" y="10" width="30" height="100" rx="5" fill="none" stroke="#0066a1" stroke-width="2"/>
+                                <circle cx="100" cy="25" r="8" fill="#e6f2f8" stroke="#0066a1" stroke-width="1.5"/>
+                                <circle cx="100" cy="50" r="8" fill="#e6f2f8" stroke="#0066a1" stroke-width="1.5"/>
+                                <circle cx="100" cy="75" r="8" fill="#e6f2f8" stroke="#0066a1" stroke-width="1.5"/>
+                                <circle cx="100" cy="100" r="8" fill="#e6f2f8" stroke="#0066a1" stroke-width="1.5"/>
+                                <!-- Arms -->
+                                <line x1="85" y1="40" x2="50" y2="30" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="115" y1="40" x2="150" y2="30" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Legs -->
+                                <line x1="90" y1="110" x2="70" y2="140" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="110" y1="110" x2="130" y2="140" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <text x="100" y="155" text-anchor="middle" fill="#0066a1" font-size="10" font-family="Tajawal">العمود الفقري</text>
+                            </svg>
+                        </div>
+
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">1</div>
+                            <div class="treatment-step-content">
+                                <h4>التقييم الأولي</h4>
+                                <p>فحص شامل للعمود الفقري وتحديد نقاط الألم والتشنجات العضلية</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">2</div>
+                            <div class="treatment-step-content">
+                                <h4>تمارين الإطالة</h4>
+                                <p>إطالة عضلات الظهر والرقبة بشكل تدريجي لتحسين المرونة</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">3</div>
+                            <div class="treatment-step-content">
+                                <h4>تقوية العمود الفقري</h4>
+                                <p>تمارين خاصة لتقوية عضلات الظهر وتحسين الاستقرار</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">4</div>
+                            <div class="treatment-step-content">
+                                <h4>تصحيح الوضعية</h4>
+                                <p>تعلم الوضعية الصحيحة للجلوس والوقوف والمشي</p>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:10px;margin-top:20px;">
+                            <button class="admin-btn admin-btn-primary" style="flex:1;">
+                                <i class="fas fa-plus"></i> تعيين لمريض
+                            </button>
+                            <button class="admin-btn" style="flex:1;background:var(--bg);color:var(--dark);">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Nerve Plan -->
+                    <div class="treatment-plan">
+                        <div class="treatment-plan-header">
+                            <div class="treatment-plan-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <div class="treatment-plan-title">خطة علاج الأعصاب والشلل</div>
+                                <div class="treatment-plan-subtitle">4 خطوات علاجية</div>
+                            </div>
+                        </div>
+
+                        <div class="treatment-illustration">
+                            <svg viewBox="0 0 200 120" style="max-width:200px;">
+                                <!-- Nerve illustration -->
+                                <circle cx="100" cy="30" r="15" fill="#e6f2f8" stroke="#0066a1" stroke-width="2"/>
+                                <path d="M100 45 Q80 70 60 90" fill="none" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M100 45 Q120 70 140 90" fill="none" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M100 45 Q100 70 100 100" fill="none" stroke="#0066a1" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Nerve pulses -->
+                                <circle cx="70" cy="80" r="3" fill="#00a86b"/>
+                                <circle cx="130" cy="80" r="3" fill="#00a86b"/>
+                                <circle cx="100" cy="90" r="3" fill="#00a86b"/>
+                                <text x="100" y="115" text-anchor="middle" fill="#0066a1" font-size="10" font-family="Tajawal">الأعصاب والشلل</text>
+                            </svg>
+                        </div>
+
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">1</div>
+                            <div class="treatment-step-content">
+                                <h4>تقييم الوظائف العصبية</h4>
+                                <p>فحص حركة الأطراف والإحساس وقوة العضلات</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">2</div>
+                            <div class="treatment-step-content">
+                                <h4>العلاج الكهربائي</h4>
+                                <p>تحفيز العضلات بالتيار الكهربائي المنخفض لاستعادة الحركة</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">3</div>
+                            <div class="treatment-step-content">
+                                <h4>تمارين الحركة</h4>
+                                <p>تمرين المفاصل والعضلات المصابة يومياً بشكل تدريجي</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">4</div>
+                            <div class="treatment-step-content">
+                                <h4>تمارين التوازن</h4>
+                                <p>استعادة التوازن والتنسيق الحركي للمشي الطبيعي</p>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:10px;margin-top:20px;">
+                            <button class="admin-btn admin-btn-primary" style="flex:1;">
+                                <i class="fas fa-plus"></i> تعيين لمريض
+                            </button>
+                            <button class="admin-btn" style="flex:1;background:var(--bg);color:var(--dark);">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Post-Surgery Plan -->
+                    <div class="treatment-plan">
+                        <div class="treatment-plan-header">
+                            <div class="treatment-plan-icon">
+                                <i class="fas fa-procedures"></i>
+                            </div>
+                            <div>
+                                <div class="treatment-plan-title">خطة التأهيل بعد الجراحة</div>
+                                <div class="treatment-plan-subtitle">4 خطوات علاجية</div>
+                            </div>
+                        </div>
+
+                        <div class="treatment-illustration">
+                            <svg viewBox="0 0 200 120" style="max-width:200px;">
+                                <!-- Surgery recovery illustration -->
+                                <rect x="70" y="20" width="60" height="80" rx="10" fill="none" stroke="#0066a1" stroke-width="2"/>
+                                <line x1="85" y1="40" x2="115" y2="40" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,3"/>
+                                <path d="M90 60 Q100 70 110 60" fill="none" stroke="#00a86b" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="100" cy="85" r="8" fill="#e6f2f8" stroke="#0066a1" stroke-width="1.5"/>
+                                <text x="100" y="115" text-anchor="middle" fill="#0066a1" font-size="10" font-family="Tajawal">التأهيل بعد الجراحة</text>
+                            </svg>
+                        </div>
+
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">1</div>
+                            <div class="treatment-step-content">
+                                <h4>مرحلة التعافي المبكر</h4>
+                                <p>تحريك المفاصل بلطف لتجنب التصلب وتنشيط الدورة الدموية</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">2</div>
+                            <div class="treatment-step-content">
+                                <h4>تقوية العضلات</h4>
+                                <p>تمارين تدريجية لتقوية العضلات حول منطقة الجراحة</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">3</div>
+                            <div class="treatment-step-content">
+                                <h4>استعادة الحركة الكاملة</h4>
+                                <p>إطالة وتمديد لاستعادة مدى الحركة الطبيعي للمفصل</p>
+                            </div>
+                        </div>
+                        <div class="treatment-step">
+                            <div class="treatment-step-number">4</div>
+                            <div class="treatment-step-content">
+                                <h4>العودة للنشاط</h4>
+                                <p>تمارين وظيفية للعودة للحياة اليومية والأنشطة الطبيعية</p>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:10px;margin-top:20px;">
+                            <button class="admin-btn admin-btn-primary" style="flex:1;">
+                                <i class="fas fa-plus"></i> تعيين لمريض
+                            </button>
+                            <button class="admin-btn" style="flex:1;background:var(--bg);color:var(--dark);">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

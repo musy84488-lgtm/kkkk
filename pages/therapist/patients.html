@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرضاي - خطوة وشفاء</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            <a href="../../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="profile.html"><i class="fas fa-user-md"></i> بروفايلي</a>
+            <a href="appointments.html"><i class="fas fa-calendar-alt"></i> مواعيدي</a>
+            <a href="patients.html" class="active"><i class="fas fa-users"></i> مرضاي</a>
+            <a href="treatment-plans.html"><i class="fas fa-clipboard-list"></i> الخطط العلاجية</a>
+            <a href="../../pages/support.html"><i class="fas fa-headset"></i> الدعم الفني</a>
+        </nav>
+    </div>
+
+    <div class="page-header">
+        <h1>مرضاي</h1>
+        <p>قائمة المرضى المسندين إليك</p>
+    </div>
+
+    <div style="padding:20px;max-width:600px;margin:0 auto;">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <div class="admin-card-title">المرضى النشطون</div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <div style="background:var(--bg);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:12px;">
+                    <div style="width:50px;height:50px;background:var(--primary-light);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:20px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-weight:700;">أحمد محمد</div>
+                        <div style="font-size:13px;color:var(--gray);">عظام وعمود فقري • دمشق - المزة</div>
+                        <div style="font-size:12px;color:var(--primary);margin-top:4px;">
+                            <i class="fas fa-calendar"></i> الجلسة القادمة: الأحد 10:00 ص
+                        </div>
+                    </div>
+                    <a href="patient-detail.html?id=1" class="admin-btn admin-btn-sm admin-btn-primary">عرض</a>
+                </div>
+
+                <div style="background:var(--bg);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:12px;">
+                    <div style="width:50px;height:50px;background:var(--primary-light);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:20px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-weight:700;">سارة علي</div>
+                        <div style="font-size:13px;color:var(--gray);">أعصاب وشلل • حلب - السكري</div>
+                        <div style="font-size:12px;color:var(--accent);margin-top:4px;">
+                            <i class="fas fa-clock"></i> بانتظار تأكيد الموعد
+                        </div>
+                    </div>
+                    <a href="patient-detail.html?id=2" class="admin-btn admin-btn-sm admin-btn-primary">عرض</a>
+                </div>
+
+                <div style="background:var(--bg);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:12px;opacity:0.7;">
+                    <div style="width:50px;height:50px;background:var(--gray-lighter);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:20px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-weight:700;">محمد خالد</div>
+                        <div style="font-size:13px;color:var(--gray);">تأهيل بعد الجراحة • دمشق - المالكي</div>
+                        <div style="font-size:12px;color:var(--secondary);margin-top:4px;">
+                            <i class="fas fa-check-circle"></i> تم إنهاء الخطة العلاجية
+                        </div>
+                    </div>
+                    <a href="patient-detail.html?id=3" class="admin-btn admin-btn-sm" style="background:var(--gray-lighter);color:var(--gray);">عرض</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
