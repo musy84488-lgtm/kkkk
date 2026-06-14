@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب معالج فيزيائي - خطوة وشفاء</title>
+    <title>اطلب معالجاً فيزيائياً - خطوة وشفاء</title>
+    <meta name="description" content="أرسل طلبك للحصول على معالج فيزيائي معتمد في منزلك في أي محافظة سورية">
+    <meta name="keywords" content="طلب معالج فيزيائي, علاج طبيعي منزلي, سوريا">
+    <meta property="og:title" content="اطلب معالجاً فيزيائياً - خطوة وشفاء">
+    <meta property="og:description" content="أرسل طلبك للحصول على معالج فيزيائي معتمد في منزلك">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_SY">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="اطلب معالجاً فيزيائياً - خطوة وشفاء">
+    <meta name="theme-color" content="#0066a1">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../images/icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -33,26 +44,12 @@
             <a href="../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="../index.html">
-                <i class="fas fa-home"></i>
-                الرئيسية
-            </a>
-            <a href="request.html" class="active">
-                <i class="fas fa-hand-holding-medical"></i>
-                اطلب معالجاً
-            </a>
-            <a href="register.html">
-                <i class="fas fa-user-plus"></i>
-                سجّل كمعالج
-            </a>
-            <a href="support.html">
-                <i class="fas fa-headset"></i>
-                الدعم الفني
-            </a>
-            <a href="admin/login.html">
-                <i class="fas fa-lock"></i>
-                لوحة الإدارة
-            </a>
+            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="request.html" class="active"><i class="fas fa-hand-holding-medical"></i> اطلب معالجاً</a>
+            <a href="register.html"><i class="fas fa-user-plus"></i> سجّل كمعالج</a>
+            <a href="track.html"><i class="fas fa-map-marker-alt"></i> تتبع طلبك</a>
+            <a href="support.html"><i class="fas fa-headset"></i> الدعم الفني</a>
+            <a href="admin/login.html"><i class="fas fa-lock"></i> لوحة الإدارة</a>
         </nav>
     </div>
 
@@ -62,15 +59,54 @@
         <p>أدخل بياناتك وسيتواصل معك فريقنا لترتيب الزيارة</p>
     </div>
 
+    <!-- Success Screen (hidden initially) -->
+    <div id="successScreen" style="display:none;padding:40px 20px;max-width:500px;margin:0 auto;text-align:center;">
+        <div style="width:80px;height:80px;background:rgba(0,168,107,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;color:var(--secondary);">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:8px;">تم إرسال طلبك بنجاح!</h2>
+        <p style="color:var(--gray);margin-bottom:24px;">سنتواصل معك خلال 24 ساعة لترتيب الزيارة</p>
+
+        <div style="background:var(--primary-light);border-radius:var(--radius-lg);padding:20px;margin-bottom:24px;">
+            <div style="font-size:13px;color:var(--gray);margin-bottom:8px;">كود تتبع طلبك</div>
+            <div id="trackingCodeDisplay" style="font-size:28px;font-weight:900;color:var(--primary);font-family:monospace;letter-spacing:2px;"></div>
+            <div style="font-size:12px;color:var(--gray);margin-top:8px;">احتفظ بهذا الكود لمتابعة حالة طلبك</div>
+        </div>
+
+        <div class="form-note" style="text-align:right;margin-bottom:20px;">
+            <strong><i class="fas fa-whatsapp" style="color:#25d366;"></i> تم إرسال إشعار للإدارة عبر واتساب</strong><br>
+            <span style="font-size:13px;color:var(--gray);">إذا لم يفتح واتساب تلقائياً، اضغط الزر أدناه</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="track.html" class="btn btn-action">
+                <i class="fas fa-map-marker-alt"></i>
+                تتبع حالة طلبي
+            </a>
+            <button id="resendWhatsAppBtn" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                إعادة إرسال إشعار واتساب
+            </button>
+            <a href="../index.html" class="btn btn-outline" style="border-color:var(--primary);color:var(--primary);">
+                <i class="fas fa-home"></i>
+                العودة للرئيسية
+            </a>
+        </div>
+    </div>
+
     <!-- Form -->
-    <div class="form-container">
+    <div id="requestFormSection" class="form-container">
+        <div class="form-note">
+            <strong>ملاحظة:</strong> بعد إرسال طلبك ستحصل على <strong>كود تتبع</strong> يمكنك من خلاله متابعة حالة طلبك في أي وقت.
+        </div>
+
         <form id="requestForm" onsubmit="return handleRequestSubmit(event)">
             <div class="form-group">
                 <label class="form-label">
                     <span class="required">*</span>
                     الاسم الكامل
                 </label>
-                <input type="text" class="form-input" placeholder="أدخل اسمك الكامل" required>
+                <input type="text" name="name" class="form-input" placeholder="أدخل اسمك الكامل" required>
             </div>
 
             <div class="form-group">
@@ -78,7 +114,7 @@
                     <span class="required">*</span>
                     رقم الهاتف
                 </label>
-                <input type="tel" class="form-input" placeholder="09xxxxxxxx" required pattern="09[0-9]{8}">
+                <input type="tel" name="phone" class="form-input" placeholder="09xxxxxxxx" required pattern="09[0-9]{8}">
             </div>
 
             <div class="form-group">
@@ -86,7 +122,7 @@
                     <span class="required">*</span>
                     المحافظة
                 </label>
-                <select class="form-select" required>
+                <select name="province" id="provinceSelect" class="form-select" required>
                     <option value="">اختر المحافظة</option>
                     <option value="damascus">دمشق</option>
                     <option value="rif-damascus">ريف دمشق</option>
@@ -110,12 +146,12 @@
                     <span class="required">*</span>
                     المنطقة / الحي
                 </label>
-                <input type="text" class="form-input" placeholder="مثال: المزة، الشعلان" required>
+                <input type="text" name="area" class="form-input" placeholder="مثال: المزة، الشعلان" required>
             </div>
 
             <div class="form-group">
                 <label class="form-label">التخصص المطلوب</label>
-                <select class="form-select">
+                <select name="specialty" id="specialtySelect" class="form-select">
                     <option value="">غير محدد (سيتم اختياره تلقائياً)</option>
                     <option value="spine">عظام وعمود فقري</option>
                     <option value="nerve">أعصاب وشلل</option>
@@ -131,12 +167,12 @@
                     <span class="required">*</span>
                     وصف الحالة الطبية
                 </label>
-                <textarea class="form-textarea" placeholder="صف حالتك الطبية والأعراض التي تعاني منها..." required></textarea>
+                <textarea name="condition" class="form-textarea" placeholder="صف حالتك الطبية والأعراض التي تعاني منها..." required></textarea>
             </div>
 
             <div class="form-group">
                 <label class="form-label">ملاحظات إضافية</label>
-                <textarea class="form-textarea" placeholder="أي معلومات إضافية تريد إضافتها..."></textarea>
+                <textarea name="notes" class="form-textarea" placeholder="أي معلومات إضافية تريد إضافتها..."></textarea>
             </div>
 
             <button type="submit" class="btn btn-action">
@@ -150,12 +186,38 @@
     <script>
         function handleRequestSubmit(e) {
             e.preventDefault();
-            if (validateForm('requestForm')) {
-                showNotification('تم إرسال طلبك بنجاح! سنتواصل معك خلال 24 ساعة', 'success');
-                setTimeout(() => {
-                    window.location.href = '../index.html';
-                }, 2000);
-            }
+            if (!validateForm('requestForm')) return false;
+
+            const form = document.getElementById('requestForm');
+            const provinceSelect = document.getElementById('provinceSelect');
+            const specialtySelect = document.getElementById('specialtySelect');
+
+            const requestData = {
+                name: form.querySelector('[name="name"]').value.trim(),
+                phone: form.querySelector('[name="phone"]').value.trim(),
+                province: provinceSelect.value,
+                provinceLabel: provinceSelect.options[provinceSelect.selectedIndex].text,
+                area: form.querySelector('[name="area"]').value.trim(),
+                specialty: specialtySelect.value,
+                specialtyLabel: specialtySelect.value ? specialtySelect.options[specialtySelect.selectedIndex].text : '',
+                condition: form.querySelector('[name="condition"]').value.trim(),
+                notes: form.querySelector('[name="notes"]').value.trim()
+            };
+
+            const savedRequest = addRequest(requestData);
+
+            document.getElementById('trackingCodeDisplay').textContent = savedRequest.trackingCode;
+            document.getElementById('requestFormSection').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const waMsg = buildRequestWhatsApp(savedRequest);
+            setTimeout(() => sendAdminWhatsApp(waMsg), 800);
+
+            document.getElementById('resendWhatsAppBtn').onclick = function() {
+                sendAdminWhatsApp(buildRequestWhatsApp(savedRequest));
+            };
+
             return false;
         }
     </script>
