@@ -182,11 +182,17 @@
         </form>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-db.js"></script>
     <script src="../js/main.js"></script>
     <script>
-        function handleRequestSubmit(e) {
+        async function handleRequestSubmit(e) {
             e.preventDefault();
             if (!validateForm('requestForm')) return false;
+
+            const submitBtn = document.querySelector('#requestForm button[type="submit"]');
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'جارٍ الإرسال...'; }
 
             const form = document.getElementById('requestForm');
             const provinceSelect = document.getElementById('provinceSelect');
@@ -204,7 +210,7 @@
                 notes: form.querySelector('[name="notes"]').value.trim()
             };
 
-            const savedRequest = addRequest(requestData);
+            const savedRequest = await addRequest(requestData);
 
             document.getElementById('trackingCodeDisplay').textContent = savedRequest.trackingCode;
             document.getElementById('requestFormSection').style.display = 'none';
