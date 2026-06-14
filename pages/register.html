@@ -160,13 +160,19 @@
         </form>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-db.js"></script>
     <script src="../js/main.js"></script>
     <script>
         let savedTherapistData = null;
 
-        function handleRegisterSubmit(e) {
+        async function handleRegisterSubmit(e) {
             e.preventDefault();
             if (!validateForm('registerForm')) return false;
+
+            const submitBtn = document.querySelector('#registerForm button[type="submit"]');
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'جارٍ الإرسال...'; }
 
             const form = document.getElementById('registerForm');
             const provinceSelect = document.getElementById('regProvinceSelect');
@@ -184,7 +190,7 @@
                 notes: form.querySelector('[name="notes"]').value.trim()
             };
 
-            const saved = addTherapist(therapistData);
+            const saved = await addTherapist(therapistData);
             savedTherapistData = saved;
 
             document.getElementById('registerFormSection').style.display = 'none';
