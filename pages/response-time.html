@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقدير وقت الاستجابة - خطوة وشفاء</title>
+    <meta name="description" content="اعرف متى سنتواصل معك — تقدير وقت الاستجابة بناءً على محافظتك وتخصص المعالج المطلوب">
+    <meta name="keywords" content="وقت استجابة, معالج فيزيائي, خطوة وشفاء, سوريا">
+    <meta property="og:title" content="تقدير وقت الاستجابة - خطوة وشفاء">
+    <meta property="og:description" content="اعرف متى سنتواصل معك — تقدير وقت الاستجابة بناءً على محافظتك">
+    <meta property="og:locale" content="ar_SY">
+    <meta name="twitter:card" content="summary">
+    <meta name="theme-color" content="#0066a1">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../images/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .rt-hero { background: linear-gradient(135deg, var(--primary) 0%, #004f7a 100%); color: white; padding: 40px 20px; text-align: center; }
+        .rt-hero h1 { font-size: 24px; font-weight: 900; margin-bottom: 8px; }
+        .rt-hero p { font-size: 14px; opacity: 0.85; }
+        .rt-body { max-width: 600px; margin: 0 auto; padding: 24px 16px; }
+        .rt-selector { background: white; border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-lighter); margin-bottom: 20px; }
+        .rt-result { background: white; border-radius: var(--radius-lg); padding: 28px 24px; box-shadow: var(--shadow-md); border: 2px solid var(--primary); display: none; text-align: center; margin-bottom: 20px; }
+        .rt-time-big { font-size: 48px; font-weight: 900; color: var(--primary); line-height: 1; margin: 16px 0 8px; }
+        .rt-time-unit { font-size: 16px; color: var(--gray); margin-bottom: 20px; }
+        .rt-bar { height: 8px; background: var(--gray-lighter); border-radius: 4px; overflow: hidden; margin-bottom: 24px; }
+        .rt-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+        .rt-steps { display: flex; flex-direction: column; gap: 0; }
+        .rt-step { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-lighter); }
+        .rt-step:last-child { border-bottom: none; }
+        .rt-step-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+        .rt-step-content { flex: 1; }
+        .rt-step-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+        .rt-step-sub { font-size: 12px; color: var(--gray); }
+        .rt-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .rt-legend-item { background: white; border: 1px solid var(--gray-lighter); border-radius: var(--radius); padding: 14px; text-align: center; }
+        .rt-legend-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+        .badge-fast { background: #dcfce7; color: #16a34a; }
+        .badge-normal { background: #fef3c7; color: #d97706; }
+        .badge-slow { background: #fee2e2; color: #dc2626; }
+        .rt-notice { background: #f0f9ff; border-right: 4px solid var(--primary); padding: 14px 16px; border-radius: var(--radius); font-size: 13px; color: var(--gray); line-height: 1.8; }
+        .province-group { display: none; }
+        .province-group.active { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        </div>
+        <a href="../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon"><i class="fas fa-shoe-prints"></i></div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            <a href="../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="request.html"><i class="fas fa-hand-holding-medical"></i> اطلب معالجاً</a>
+            <a href="register.html"><i class="fas fa-user-plus"></i> سجّل كمعالج</a>
+            <a href="track.html"><i class="fas fa-map-marker-alt"></i> تتبع طلبك</a>
+            <a href="response-time.html" class="active"><i class="fas fa-clock"></i> وقت الاستجابة</a>
+            <a href="support.html"><i class="fas fa-headset"></i> الدعم الفني</a>
+        </nav>
+    </div>
+
+    <!-- Hero -->
+    <div class="rt-hero">
+        <h1><i class="fas fa-clock" style="margin-left:10px;opacity:0.9;"></i>تقدير وقت الاستجابة</h1>
+        <p>اعرف متى سنتواصل معك بناءً على محافظتك وطبيعة الحالة</p>
+    </div>
+
+    <div class="rt-body">
+        <!-- Selector -->
+        <div class="rt-selector">
+            <div class="form-group">
+                <label class="form-label"><span class="required">*</span> المحافظة</label>
+                <select id="rtProvince" class="form-select" onchange="calcResponseTime()">
+                    <option value="">اختر محافظتك</option>
+                    <optgroup label="الأكثر تغطية">
+                        <option value="damascus" data-tier="1">دمشق</option>
+                        <option value="rif-damascus" data-tier="1">ريف دمشق</option>
+                        <option value="aleppo" data-tier="1">حلب</option>
+                    </optgroup>
+                    <optgroup label="تغطية جيدة">
+                        <option value="homs" data-tier="2">حمص</option>
+                        <option value="hama" data-tier="2">حماة</option>
+                        <option value="latakia" data-tier="2">اللاذقية</option>
+                        <option value="tartous" data-tier="2">طرطوس</option>
+                    </optgroup>
+                    <optgroup label="تغطية نامية">
+                        <option value="idlib" data-tier="3">إدلب</option>
+                        <option value="daraa" data-tier="3">درعا</option>
+                        <option value="sweida" data-tier="3">السويداء</option>
+                        <option value="deir-ezzor" data-tier="3">دير الزور</option>
+                        <option value="raqqa" data-tier="3">الرقة</option>
+                        <option value="hasakah" data-tier="3">الحسكة</option>
+                        <option value="quneitra" data-tier="3">القنيطرة</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">التخصص المطلوب</label>
+                <select id="rtSpecialty" class="form-select" onchange="calcResponseTime()">
+                    <option value="">اختر التخصص (اختياري)</option>
+                    <option value="spine" data-demand="high">عظام وعمود فقري</option>
+                    <option value="nerve" data-demand="high">أعصاب وشلل</option>
+                    <option value="post-surgery" data-demand="medium">تأهيل بعد الجراحة</option>
+                    <option value="rheumatism" data-demand="medium">أمراض الروماتيزم</option>
+                    <option value="children" data-demand="low">تأهيل الأطفال</option>
+                    <option value="sports" data-demand="low">إعادة تأهيل رياضي</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">وقت تقديم الطلب</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <label class="form-checkbox" style="background:var(--bg);border-radius:var(--radius);padding:12px;">
+                        <input type="radio" name="rtTime" value="morning" checked onchange="calcResponseTime()">
+                        <span>صباحاً (8 ص - 2 م)</span>
+                    </label>
+                    <label class="form-checkbox" style="background:var(--bg);border-radius:var(--radius);padding:12px;">
+                        <input type="radio" name="rtTime" value="evening" onchange="calcResponseTime()">
+                        <span>مساءً (2 م - 10 م)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <div id="rtResult" class="rt-result">
+            <div style="font-size:13px;color:var(--gray);font-weight:600;">الوقت المتوقع للتواصل معك</div>
+            <div id="rtTimeBig" class="rt-time-big">--</div>
+            <div id="rtTimeUnit" class="rt-time-unit">ساعة</div>
+            <div class="rt-bar"><div id="rtBarFill" class="rt-bar-fill" style="width:0%;background:var(--secondary);"></div></div>
+            <div id="rtMessage" style="font-size:14px;color:var(--gray);margin-bottom:20px;line-height:1.8;"></div>
+            <a href="request.html" class="btn btn-action">
+                <i class="fas fa-paper-plane"></i>
+                أرسل طلبك الآن
+            </a>
+        </div>
+
+        <!-- Steps -->
+        <div class="rt-selector">
+            <div style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:16px;">
+                <i class="fas fa-list-ol" style="color:var(--primary);margin-left:8px;"></i>
+                كيف تسير العملية؟
+            </div>
+            <div class="rt-steps">
+                <div class="rt-step">
+                    <div class="rt-step-num" style="background:rgba(0,102,161,0.1);color:var(--primary);">1</div>
+                    <div class="rt-step-content">
+                        <div class="rt-step-title">تُرسل طلبك</div>
+                        <div class="rt-step-sub">تملأ النموذج وترسل طلبك مع بيانات حالتك</div>
+                    </div>
+                </div>
+                <div class="rt-step">
+                    <div class="rt-step-num" style="background:rgba(245,158,11,0.1);color:#d97706;">2</div>
+                    <div class="rt-step-content">
+                        <div class="rt-step-title">مراجعة الطلب</div>
+                        <div class="rt-step-sub">فريقنا يراجع طلبك ويختار المعالج المناسب</div>
+                    </div>
+                </div>
+                <div class="rt-step">
+                    <div class="rt-step-num" style="background:rgba(0,168,107,0.1);color:var(--secondary);">3</div>
+                    <div class="rt-step-content">
+                        <div class="rt-step-title">التواصل معك</div>
+                        <div class="rt-step-sub">نتصل بك لتأكيد موعد الزيارة</div>
+                    </div>
+                </div>
+                <div class="rt-step">
+                    <div class="rt-step-num" style="background:rgba(0,102,161,0.1);color:var(--primary);">4</div>
+                    <div class="rt-step-content">
+                        <div class="rt-step-title">الزيارة المنزلية</div>
+                        <div class="rt-step-sub">المعالج يزورك في المنزل في الموعد المحدد</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLA Legend -->
+        <div style="font-size:15px;font-weight:800;color:var(--dark);margin-bottom:12px;">
+            <i class="fas fa-info-circle" style="color:var(--primary);margin-left:6px;"></i>
+            أوقات الاستجابة حسب المحافظة
+        </div>
+        <div class="rt-legend">
+            <div class="rt-legend-item">
+                <div class="rt-legend-badge badge-fast">سريع</div>
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px;">2 - 4 ساعات</div>
+                <div style="font-size:11px;color:var(--gray);">دمشق، ريف دمشق، حلب</div>
+            </div>
+            <div class="rt-legend-item">
+                <div class="rt-legend-badge badge-normal">متوسط</div>
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px;">4 - 8 ساعات</div>
+                <div style="font-size:11px;color:var(--gray);">حمص، حماة، اللاذقية، طرطوس</div>
+            </div>
+            <div class="rt-legend-item" style="grid-column: span 2;">
+                <div class="rt-legend-badge badge-slow">نامي</div>
+                <div style="font-size:13px;font-weight:700;margin-bottom:4px;">8 - 24 ساعة</div>
+                <div style="font-size:11px;color:var(--gray);">باقي المحافظات</div>
+            </div>
+        </div>
+
+        <div class="rt-notice">
+            <i class="fas fa-clock" style="color:var(--primary);margin-left:6px;"></i>
+            <strong>أوقات الدوام:</strong> نعمل من 8 صباحاً حتى 10 مساءً يومياً. الطلبات المُرسَلة بعد الساعة 10 مساءً تُعالَج في اليوم التالي من الصباح.
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        const RESPONSE_DATA = {
+            1: { min: 2,  max: 4,  label: 'سريع',   color: '#16a34a', bg: '#dcfce7', barColor: '#16a34a', barWidth: 25  },
+            2: { min: 4,  max: 8,  label: 'متوسط',  color: '#d97706', bg: '#fef3c7', barColor: '#f59e0b', barWidth: 55  },
+            3: { min: 8,  max: 24, label: 'نامٍ',   color: '#dc2626', bg: '#fee2e2', barColor: '#dc2626', barWidth: 90  },
+        };
+
+        function calcResponseTime() {
+            const provinceSelect = document.getElementById('rtProvince');
+            const specialtySelect = document.getElementById('rtSpecialty');
+            const timeRadio = document.querySelector('[name="rtTime"]:checked');
+
+            if (!provinceSelect.value) return;
+
+            const tier = parseInt(provinceSelect.selectedOptions[0].dataset.tier || '2');
+            const demand = specialtySelect.value ? (specialtySelect.selectedOptions[0].dataset.demand || 'medium') : 'medium';
+            const isEvening = timeRadio?.value === 'evening';
+
+            let data = { ...RESPONSE_DATA[tier] };
+
+            if (demand === 'high') { data.min += 1; data.max += 2; }
+            if (demand === 'low')  { data.min = Math.max(1, data.min - 1); }
+            if (isEvening)         { data.min += 2; data.max += 4; }
+
+            const result = document.getElementById('rtResult');
+            result.style.display = 'block';
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            document.getElementById('rtTimeBig').textContent = `${data.min} - ${data.max}`;
+            document.getElementById('rtTimeUnit').textContent = data.max >= 24 ? 'ساعة (حتى يوم كامل)' : 'ساعة';
+
+            const fill = document.getElementById('rtBarFill');
+            fill.style.background = data.barColor;
+            setTimeout(() => fill.style.width = data.barWidth + '%', 100);
+
+            const provinceName = provinceSelect.selectedOptions[0].text;
+            const messages = {
+                1: `✅ ${provinceName} من أكثر المناطق تغطيةً لدينا. فريقنا سيتواصل معك في أقرب وقت.`,
+                2: `⏱️ نعمل على تغطية ${provinceName} بشكل متزايد. سنتواصل معك قريباً.`,
+                3: `📍 نحن نوسّع تغطيتنا في ${provinceName}. إذا كان لديك معرفة بمعالجين في منطقتك، يمكنهم <a href="register.html" style="color:var(--primary);">التسجيل معنا</a>.`
+            };
+            document.getElementById('rtMessage').innerHTML = messages[tier];
+
+            result.style.borderColor = data.barColor;
+        }
+    </script>
+</body>
+</html>
