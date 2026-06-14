@@ -1624,3 +1624,256 @@ body {
 .justify-between { justify-content: space-between; }
 .gap-2 { gap: 16px; }
 .w-full { width: 100%; }
+
+/* ========== PWA INSTALL BANNER ========== */
+.pwa-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--dark);
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 3000;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+}
+
+.pwa-banner i:first-child {
+    color: var(--accent);
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.pwa-banner span {
+    flex: 1;
+}
+
+.pwa-install-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.pwa-dismiss-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 12px;
+}
+
+/* ========== INPUT ERROR STATE ========== */
+.input-error {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* ========== ADMIN BADGE (notification) ========== */
+.admin-badge.completed {
+    background: rgba(0, 102, 161, 0.1);
+    color: var(--primary);
+}
+
+/* ========== FILTER BUTTONS (patients page) ========== */
+.filter-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--gray-lighter);
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--gray);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.filter-badge {
+    background: var(--danger);
+    color: white;
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 11px;
+    display: none;
+}
+
+/* ========== TRACKING PAGE ========== */
+.tracking-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-lighter);
+}
+
+.tracking-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-lighter);
+}
+
+.tracking-code {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--primary);
+    font-family: monospace;
+    letter-spacing: 2px;
+}
+
+.tracking-info {
+    margin-bottom: 20px;
+}
+
+.tracking-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-lighter);
+    font-size: 14px;
+}
+
+.tracking-row:last-child {
+    border-bottom: none;
+}
+
+.tracking-row span:first-child {
+    color: var(--gray);
+}
+
+.tracking-row span:last-child {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+/* ========== TRACKING STEPS ========== */
+.tracking-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-lighter);
+    overflow-x: auto;
+    gap: 4px;
+}
+
+.tracking-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    min-width: 56px;
+}
+
+.tracking-step-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gray-lighter);
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-bottom: 8px;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+.tracking-step.done .tracking-step-icon {
+    background: var(--secondary);
+    color: white;
+}
+
+.tracking-step.current .tracking-step-icon {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(0, 102, 161, 0.2);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(0, 102, 161, 0.2); }
+    50% { box-shadow: 0 0 0 8px rgba(0, 102, 161, 0.1); }
+}
+
+.tracking-step-label {
+    font-size: 11px;
+    text-align: center;
+    color: var(--gray);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.tracking-step.done .tracking-step-label,
+.tracking-step.current .tracking-step-label {
+    color: var(--dark);
+    font-weight: 700;
+}
+
+.tracking-step-line {
+    position: absolute;
+    top: 18px;
+    left: calc(-50% + 18px);
+    right: calc(50% + 18px);
+    height: 2px;
+    background: var(--gray-lighter);
+    z-index: 0;
+}
+
+.tracking-step.done .tracking-step-line {
+    background: var(--secondary);
+}
+
+.tracking-not-found {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-lighter);
+}
