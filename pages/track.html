@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تتبع حالة طلبك - خطوة وشفاء</title>
+    <meta name="description" content="تتبع حالة طلب العلاج الطبيعي الخاص بك عبر كود التتبع">
+    <meta name="keywords" content="تتبع طلب, علاج طبيعي, خطوة وشفاء">
+    <meta property="og:title" content="تتبع حالة طلبك - خطوة وشفاء">
+    <meta property="og:description" content="تتبع حالة طلب العلاج الطبيعي الخاص بك عبر كود التتبع">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_SY">
+    <meta name="twitter:card" content="summary">
+    <meta name="theme-color" content="#0066a1">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../images/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <a href="../index.html" class="logo-text">خطوة وشفاء</a>
+        <div class="logo-icon">
+            <i class="fas fa-shoe-prints"></i>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="request.html"><i class="fas fa-hand-holding-medical"></i> اطلب معالجاً</a>
+            <a href="register.html"><i class="fas fa-user-plus"></i> سجّل كمعالج</a>
+            <a href="track.html" class="active"><i class="fas fa-map-marker-alt"></i> تتبع طلبك</a>
+            <a href="support.html"><i class="fas fa-headset"></i> الدعم الفني</a>
+            <a href="admin/login.html"><i class="fas fa-lock"></i> لوحة الإدارة</a>
+        </nav>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> تتبع طلبك</h1>
+        <p>أدخل كود التتبع الذي حصلت عليه عند إرسال طلبك</p>
+    </div>
+
+    <!-- Search Box -->
+    <div class="form-container" style="padding-top:0;">
+        <div class="profile-card" style="padding:24px;">
+            <div class="form-group" style="margin-bottom:16px;">
+                <label class="form-label">
+                    <i class="fas fa-barcode" style="color:var(--primary);margin-left:6px;"></i>
+                    كود التتبع
+                </label>
+                <input
+                    type="text"
+                    id="trackingInput"
+                    class="form-input"
+                    placeholder="مثال: KW-123456"
+                    style="text-align:center;font-size:18px;font-weight:700;letter-spacing:2px;font-family:monospace;"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+            </div>
+            <button id="trackBtn" class="btn btn-action" style="max-width:100%;">
+                <i class="fas fa-search"></i>
+                بحث عن الطلب
+            </button>
+        </div>
+
+        <!-- Result Area -->
+        <div id="trackingResult" style="margin-top:16px;"></div>
+
+        <!-- Help Box -->
+        <div class="form-note" style="margin-top:20px;">
+            <strong><i class="fas fa-info-circle"></i> أين أجد كود التتبع؟</strong><br>
+            الكود يظهر بعد إرسال طلبك مباشرة على شاشة التأكيد. يبدأ بـ <strong>KW-</strong> متبوعاً بـ 6 أرقام.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top:40px;">
+        <div class="footer-logo">
+            <span class="footer-logo-text">خطوة وشفاء</span>
+            <div class="footer-logo-icon"><i class="fas fa-shoe-prints"></i></div>
+        </div>
+        <p class="footer-desc">منصة العلاج الطبيعي المنزلي في سوريا</p>
+        <div class="footer-bottom">
+            <p>© 2026 خطوة وشفاء — جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
