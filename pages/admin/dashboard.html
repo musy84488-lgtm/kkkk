@@ -32,41 +32,41 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="admin-stat-info">
-                            <h4>24</h4>
-                            <p>طلبات المرضى</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="admin-card">
-                    <div class="admin-stat">
-                        <div class="admin-stat-icon green">
-                            <i class="fas fa-user-md"></i>
-                        </div>
-                        <div class="admin-stat-info">
-                            <h4>18</h4>
-                            <p>المعالجين</p>
+                            <h4 id="statTotal">0</h4>
+                            <p>إجمالي الطلبات</p>
                         </div>
                     </div>
                 </div>
                 <div class="admin-card">
                     <div class="admin-stat">
                         <div class="admin-stat-icon orange">
-                            <i class="fas fa-calendar-check"></i>
+                            <i class="fas fa-clock"></i>
                         </div>
                         <div class="admin-stat-info">
-                            <h4>12</h4>
-                            <p>مواعيد اليوم</p>
+                            <h4 id="statNew">0</h4>
+                            <p>بانتظار المراجعة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-stat">
+                        <div class="admin-stat-icon green">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="admin-stat-info">
+                            <h4 id="statInProgress">0</h4>
+                            <p>قيد العلاج</p>
                         </div>
                     </div>
                 </div>
                 <div class="admin-card">
                     <div class="admin-stat">
                         <div class="admin-stat-icon red">
-                            <i class="fas fa-clock"></i>
+                            <i class="fas fa-calendar-day"></i>
                         </div>
                         <div class="admin-stat-info">
-                            <h4>5</h4>
-                            <p>بانتظار التأكيد</p>
+                            <h4 id="statToday">0</h4>
+                            <p>طلبات اليوم</p>
                         </div>
                     </div>
                 </div>
@@ -78,9 +78,10 @@
                     <div class="admin-card-title">إجراءات سريعة</div>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
-                    <a href="patients.html" class="profile-menu-item" style="text-decoration:none;">
+                    <a href="patients.html" class="profile-menu-item" style="text-decoration:none;position:relative;">
                         <i class="fas fa-users"></i>
-                        <span>إدارة المرضى</span>
+                        <span>إدارة الطلبات</span>
+                        <span id="adminNotifBadge" style="display:none;background:var(--danger);color:white;border-radius:50%;width:20px;height:20px;font-size:11px;font-weight:700;align-items:center;justify-content:center;position:absolute;top:8px;left:8px;"></span>
                         <i class="fas fa-chevron-left"></i>
                     </a>
                     <a href="therapists.html" class="profile-menu-item" style="text-decoration:none;">
@@ -114,7 +115,10 @@
             <!-- Recent Requests -->
             <div class="admin-card">
                 <div class="admin-card-header">
-                    <div class="admin-card-title">آخر الطلبات</div>
+                    <div class="admin-card-title">
+                        <i class="fas fa-bell" style="color:var(--primary);margin-left:8px;"></i>
+                        آخر الطلبات
+                    </div>
                     <a href="patients.html" style="color:var(--primary);font-size:14px;text-decoration:none;">عرض الكل</a>
                 </div>
                 <div style="overflow-x:auto;">
@@ -128,35 +132,9 @@
                                 <th>الإجراء</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="recentRequestsBody">
                             <tr>
-                                <td>أحمد محمد</td>
-                                <td>دمشق</td>
-                                <td>عظام</td>
-                                <td><span class="admin-badge pending">بانتظار المراجعة</span></td>
-                                <td>
-                                    <button class="admin-btn admin-btn-sm admin-btn-success">قبول</button>
-                                    <button class="admin-btn admin-btn-sm admin-btn-danger">رفض</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>سارة علي</td>
-                                <td>حلب</td>
-                                <td>أعصاب</td>
-                                <td><span class="admin-badge approved">تم القبول</span></td>
-                                <td>
-                                    <button class="admin-btn admin-btn-sm admin-btn-primary">عرض</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>خالد عمر</td>
-                                <td>حمص</td>
-                                <td>تأهيل</td>
-                                <td><span class="admin-badge pending">بانتظار المراجعة</span></td>
-                                <td>
-                                    <button class="admin-btn admin-btn-sm admin-btn-success">قبول</button>
-                                    <button class="admin-btn admin-btn-sm admin-btn-danger">رفض</button>
-                                </td>
+                                <td colspan="5" style="text-align:center;color:var(--gray);padding:30px;">جاري التحميل...</td>
                             </tr>
                         </tbody>
                     </table>
