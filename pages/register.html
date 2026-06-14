@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل معالج فيزيائي - خطوة وشفاء</title>
+    <title>سجّل كمعالج فيزيائي - خطوة وشفاء</title>
+    <meta name="description" content="انضم إلى شبكة معالجي خطوة وشفاء وقدّم خدمات العلاج الطبيعي المنزلي في محافظتك بسوريا">
+    <meta name="keywords" content="معالج فيزيائي, علاج طبيعي, سوريا, تسجيل معالج, عمل معالج">
+    <meta property="og:title" content="سجّل كمعالج فيزيائي - خطوة وشفاء">
+    <meta property="og:description" content="انضم إلى شبكة معالجي خطوة وشفاء وقدّم خدمات العلاج الطبيعي المنزلي في محافظتك">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_SY">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="سجّل كمعالج فيزيائي - خطوة وشفاء">
+    <meta name="twitter:description" content="انضم إلى شبكة معالجي خطوة وشفاء">
+    <meta name="theme-color" content="#0066a1">
+    <link rel="manifest" href="../manifest.json">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <!-- PWA Install Banner -->
+    <div id="pwaInstallBanner" class="pwa-banner" style="display:none;">
+        <i class="fas fa-mobile-alt"></i>
+        <span>أضف التطبيق لشاشتك الرئيسية</span>
+        <button onclick="installPWA()" class="pwa-install-btn">تثبيت</button>
+        <button onclick="dismissPWABanner()" class="pwa-dismiss-btn"><i class="fas fa-times"></i></button>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="header-left">
@@ -16,43 +35,22 @@
             </button>
         </div>
         <a href="../index.html" class="logo-text">خطوة وشفاء</a>
-        <div class="logo-icon">
-            <i class="fas fa-shoe-prints"></i>
-        </div>
+        <div class="logo-icon"><i class="fas fa-shoe-prints"></i></div>
     </header>
 
-    <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <button class="sidebar-close" onclick="closeSidebar()">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
             <a href="../index.html" class="logo-text" style="font-size:18px;">خطوة وشفاء</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="../index.html">
-                <i class="fas fa-home"></i>
-                الرئيسية
-            </a>
-            <a href="request.html">
-                <i class="fas fa-hand-holding-medical"></i>
-                اطلب معالجاً
-            </a>
-            <a href="register.html" class="active">
-                <i class="fas fa-user-plus"></i>
-                سجّل كمعالج
-            </a>
-            <a href="support.html">
-                <i class="fas fa-headset"></i>
-                الدعم الفني
-            </a>
-            <a href="admin/login.html">
-                <i class="fas fa-lock"></i>
-                لوحة الإدارة
-            </a>
+            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="request.html"><i class="fas fa-hand-holding-medical"></i> اطلب معالجاً</a>
+            <a href="register.html" class="active"><i class="fas fa-user-plus"></i> سجّل كمعالج</a>
+            <a href="track.html"><i class="fas fa-map-marker-alt"></i> تتبع طلبك</a>
+            <a href="support.html"><i class="fas fa-headset"></i> الدعم الفني</a>
+            <a href="admin/login.html"><i class="fas fa-lock"></i> لوحة الإدارة</a>
         </nav>
     </div>
 
@@ -62,35 +60,51 @@
         <p>انضم إلى شبكة معالجينا المعتمدين وقدّم خدماتك للمرضى في منطقتك</p>
     </div>
 
+    <!-- Success Screen -->
+    <div id="successScreen" style="display:none;padding:40px 20px;max-width:500px;margin:0 auto;text-align:center;">
+        <div style="width:80px;height:80px;background:rgba(0,168,107,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;color:var(--secondary);">
+            <i class="fas fa-user-check"></i>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:8px;">تم إرسال طلب التسجيل!</h2>
+        <p style="color:var(--gray);margin-bottom:24px;">ستتم مراجعة طلبك من قبل الإدارة والتواصل معك خلال 24-48 ساعة</p>
+
+        <div class="form-note" style="text-align:right;margin-bottom:24px;">
+            <strong><i class="fas fa-whatsapp" style="color:#25d366;"></i> تم إرسال إشعار للإدارة عبر واتساب</strong><br>
+            <span style="font-size:13px;color:var(--gray);">إذا لم يفتح واتساب تلقائياً، اضغط الزر أدناه</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <button id="resendWhatsAppBtn" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                إعادة إرسال إشعار واتساب
+            </button>
+            <a href="../index.html" class="btn btn-outline" style="border-color:var(--primary);color:var(--primary);">
+                <i class="fas fa-home"></i>
+                العودة للرئيسية
+            </a>
+        </div>
+    </div>
+
     <!-- Form -->
-    <div class="form-container">
+    <div id="registerFormSection" class="form-container">
         <div class="form-note">
-            <strong>ملاحظة:</strong> سيتم مراجعة طلبك من قبل الإدارة قبل تفعيل حسابك
+            <strong>ملاحظة:</strong> سيتم مراجعة طلبك من قبل الإدارة قبل تفعيل حسابك. بعد الإرسال سيُفتح واتساب لإشعار الإدارة تلقائياً.
         </div>
 
         <form id="registerForm" onsubmit="return handleRegisterSubmit(event)">
             <div class="form-group">
-                <label class="form-label">
-                    <span class="required">*</span>
-                    الاسم الكامل
-                </label>
-                <input type="text" class="form-input" placeholder="الاسم الكامل" required>
+                <label class="form-label"><span class="required">*</span> الاسم الكامل</label>
+                <input type="text" name="name" class="form-input" placeholder="الاسم الكامل" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">
-                    <span class="required">*</span>
-                    رقم الهاتف
-                </label>
-                <input type="tel" class="form-input" placeholder="09xxxxxxxx" required pattern="09[0-9]{8}">
+                <label class="form-label"><span class="required">*</span> رقم الهاتف</label>
+                <input type="tel" name="phone" class="form-input" placeholder="09xxxxxxxx" required pattern="09[0-9]{8}">
             </div>
 
             <div class="form-group">
-                <label class="form-label">
-                    <span class="required">*</span>
-                    المحافظة
-                </label>
-                <select class="form-select" required>
+                <label class="form-label"><span class="required">*</span> المحافظة</label>
+                <select name="province" id="regProvinceSelect" class="form-select" required>
                     <option value="">اختر المحافظة</option>
                     <option value="damascus">دمشق</option>
                     <option value="rif-damascus">ريف دمشق</option>
@@ -110,19 +124,13 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">
-                    <span class="required">*</span>
-                    المنطقة / الحي
-                </label>
-                <input type="text" class="form-input" placeholder="مثال: المزة، الشعلان" required>
+                <label class="form-label"><span class="required">*</span> المنطقة / الحي</label>
+                <input type="text" name="area" class="form-input" placeholder="مثال: المزة، الشعلان" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">
-                    <span class="required">*</span>
-                    التخصص
-                </label>
-                <select class="form-select" required>
+                <label class="form-label"><span class="required">*</span> التخصص</label>
+                <select name="specialty" id="regSpecialtySelect" class="form-select" required>
                     <option value="">اختر التخصص</option>
                     <option value="spine">عظام وعمود فقري</option>
                     <option value="nerve">أعصاب وشلل</option>
@@ -135,14 +143,14 @@
 
             <div class="form-group">
                 <label class="form-checkbox">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" name="homeVisit" checked>
                     <span>أوفّر خدمة الزيارات المنزلية</span>
                 </label>
             </div>
 
             <div class="form-group">
-                <label class="form-label">ملاحظات (شهادات، خبرات، إلخ)</label>
-                <textarea class="form-textarea" placeholder="أذكر خبراتك وشهاداتك وسنوات العمل..."></textarea>
+                <label class="form-label">الخبرات والشهادات</label>
+                <textarea name="notes" class="form-textarea" placeholder="أذكر خبراتك وشهاداتك وسنوات العمل..."></textarea>
             </div>
 
             <button type="submit" class="btn btn-action">
@@ -154,14 +162,42 @@
 
     <script src="../js/main.js"></script>
     <script>
+        let savedTherapistData = null;
+
         function handleRegisterSubmit(e) {
             e.preventDefault();
-            if (validateForm('registerForm')) {
-                showNotification('تم إرسال طلب التسجيل! سيتم مراجعته من قبل الإدارة', 'success');
-                setTimeout(() => {
-                    window.location.href = '../index.html';
-                }, 2000);
-            }
+            if (!validateForm('registerForm')) return false;
+
+            const form = document.getElementById('registerForm');
+            const provinceSelect = document.getElementById('regProvinceSelect');
+            const specialtySelect = document.getElementById('regSpecialtySelect');
+
+            const therapistData = {
+                name: form.querySelector('[name="name"]').value.trim(),
+                phone: form.querySelector('[name="phone"]').value.trim(),
+                province: provinceSelect.value,
+                provinceLabel: provinceSelect.options[provinceSelect.selectedIndex].text,
+                area: form.querySelector('[name="area"]').value.trim(),
+                specialty: specialtySelect.value,
+                specialtyLabel: specialtySelect.options[specialtySelect.selectedIndex].text,
+                homeVisit: form.querySelector('[name="homeVisit"]').checked,
+                notes: form.querySelector('[name="notes"]').value.trim()
+            };
+
+            const saved = addTherapist(therapistData);
+            savedTherapistData = saved;
+
+            document.getElementById('registerFormSection').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const msg = buildTherapistWhatsApp(saved);
+            setTimeout(() => sendAdminWhatsApp(msg), 800);
+
+            document.getElementById('resendWhatsAppBtn').onclick = function() {
+                sendAdminWhatsApp(buildTherapistWhatsApp(saved));
+            };
+
             return false;
         }
     </script>
