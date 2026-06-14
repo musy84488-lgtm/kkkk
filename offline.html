@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لا يوجد اتصال - خطوة وشفاء</title>
+    <meta name="theme-color" content="#0066a1">
+    <link rel="icon" href="images/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg); padding: 24px; text-align: center; }
+        .offline-icon { width: 120px; height: 120px; background: linear-gradient(135deg, #e8f4fd, #c8e6fa); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 52px; color: var(--primary); position: relative; animation: pulse 3s ease-in-out infinite; }
+        .offline-icon::after { content: ''; position: absolute; bottom: 10px; right: 10px; width: 28px; height: 28px; background: #dc2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; }
+        @keyframes pulse { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.05); } }
+        .offline-title { font-size: 26px; font-weight: 900; color: var(--dark); margin-bottom: 12px; }
+        .offline-sub { font-size: 15px; color: var(--gray); margin-bottom: 32px; line-height: 1.8; max-width: 320px; }
+        .offline-card { background: white; border-radius: var(--radius-lg); padding: 20px; margin-bottom: 28px; width: 100%; max-width: 400px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-lighter); }
+        .offline-card-title { font-size: 14px; font-weight: 700; color: var(--gray); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .cached-link { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-lighter); text-decoration: none; color: var(--dark); font-size: 15px; font-weight: 600; transition: color .2s; }
+        .cached-link:last-child { border-bottom: none; }
+        .cached-link i { width: 32px; height: 32px; background: var(--primary-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 14px; flex-shrink: 0; }
+        .cached-link:hover { color: var(--primary); }
+        .retry-area { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 400px; }
+        .connection-status { display: inline-flex; align-items: center; gap: 8px; background: #fef2f2; color: #dc2626; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+        .connection-status.online { background: #f0fdf4; color: #16a34a; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: blink 1.4s ease-in-out infinite; }
+        @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+    </style>
+</head>
+<body>
+    <div class="offline-icon">
+        <i class="fas fa-wifi"></i>
+    </div>
+
+    <div id="statusBadge" class="connection-status">
+        <span class="dot"></span>
+        غير متصل بالإنترنت
+    </div>
+
+    <div class="offline-title">لا يوجد اتصال بالإنترنت</div>
+    <div class="offline-sub">تحقق من اتصالك بالواي فاي أو بيانات الهاتف، ثم حاول مجدداً</div>
+
+    <div class="offline-card">
+        <div class="offline-card-title">
+            <i class="fas fa-download" style="color:var(--secondary);"></i>
+            الصفحات المتاحة بدون إنترنت
+        </div>
+        <a href="index.html" class="cached-link">
+            <i class="fas fa-home"></i>
+            الصفحة الرئيسية
+        </a>
+        <a href="pages/request.html" class="cached-link">
+            <i class="fas fa-hand-holding-medical"></i>
+            اطلب معالجاً
+        </a>
+        <a href="pages/track.html" class="cached-link">
+            <i class="fas fa-map-marker-alt"></i>
+            تتبع طلبك
+        </a>
+        <a href="pages/register.html" class="cached-link">
+            <i class="fas fa-user-plus"></i>
+            سجّل كمعالج
+        </a>
+        <a href="pages/support.html" class="cached-link">
+            <i class="fas fa-headset"></i>
+            الدعم الفني
+        </a>
+    </div>
+
+    <div class="retry-area">
+        <button onclick="retryConnection()" class="btn btn-action">
+            <i class="fas fa-redo"></i>
+            إعادة المحاولة
+        </button>
+    </div>
+
+    <script>
+        function retryConnection() {
+            const btn = document.querySelector('.btn-action');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    window.location.href = 'index.html';
+                } else {
+                    btn.innerHTML = '<i class="fas fa-redo"></i> إعادة المحاولة';
+                    btn.disabled = false;
+                    const badge = document.getElementById('statusBadge');
+                    badge.style.animation = 'none';
+                    badge.style.background = '#fef2f2';
+                    setTimeout(() => badge.style.animation = '', 300);
+                }
+            }, 1500);
+        }
+
+        window.addEventListener('online', () => {
+            const badge = document.getElementById('statusBadge');
+            badge.className = 'connection-status online';
+            badge.innerHTML = '<span class="dot"></span> تم استعادة الاتصال!';
+            setTimeout(() => window.location.href = 'index.html', 1200);
+        });
+
+        window.addEventListener('offline', () => {
+            const badge = document.getElementById('statusBadge');
+            badge.className = 'connection-status';
+            badge.innerHTML = '<span class="dot"></span> غير متصل بالإنترنت';
+        });
+    </script>
+</body>
+</html>
