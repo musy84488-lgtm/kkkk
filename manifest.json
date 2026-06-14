@@ -2,7 +2,8 @@
   "name": "خطوة وشفاء - العلاج الطبيعي المنزلي",
   "short_name": "خطوة وشفاء",
   "description": "منصة العلاج الطبيعي المنزلي في سوريا — نوصلك بأفضل المعالجين الفيزيائيين المعتمدين في محافظتك",
-  "start_url": "/",
+  "start_url": "/kkkk/",
+  "scope": "/kkkk/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0066a1",
@@ -23,21 +24,21 @@
       "name": "اطلب معالجاً",
       "short_name": "طلب",
       "description": "أرسل طلب علاج جديد",
-      "url": "/pages/request.html",
+      "url": "/kkkk/pages/request.html",
       "icons": [{ "src": "images/icon.svg", "sizes": "any" }]
     },
     {
       "name": "تتبع طلبك",
       "short_name": "تتبع",
       "description": "تتبع حالة طلبك",
-      "url": "/pages/track.html",
+      "url": "/kkkk/pages/track.html",
       "icons": [{ "src": "images/icon.svg", "sizes": "any" }]
     },
     {
       "name": "تواصل معنا",
       "short_name": "دعم",
       "description": "الدعم الفني",
-      "url": "/pages/support.html",
+      "url": "/kkkk/pages/support.html",
       "icons": [{ "src": "images/icon.svg", "sizes": "any" }]
     }
   ],
