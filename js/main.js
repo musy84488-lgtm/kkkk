@@ -3,11 +3,30 @@
 // خطوة وشفاء - JavaScript الرئيسي
 // ============================================
 
+// ========== CONSTANTS ==========
+const ADMIN_PASSWORD_HASH = '074cd303007f527f44bd56aaf68d4e2aec1bf952fa0974946e9db1b72ce69f16';
+const STORAGE_KEY = 'kw_requests';
+
+// ========== PATH HELPERS ==========
+function getDepth() {
+    const path = window.location.pathname;
+    if (path.includes('/pages/admin/')) return 'admin';
+    if (path.includes('/pages/')) return 'pages';
+    return 'root';
+}
+
+function resolveAdminPath(file) {
+    const depth = getDepth();
+    if (depth === 'admin') return file;
+    if (depth === 'pages') return 'admin/' + file;
+    return 'pages/admin/' + file;
+}
+
 // ========== SIDEBAR ==========
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
-
+    if (!sidebar) return;
     if (sidebar.classList.contains('active')) {
         sidebar.classList.remove('active');
         overlay.classList.remove('active');
@@ -22,19 +41,23 @@ function toggleSidebar() {
 function closeSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
+    if (!sidebar) return;
     sidebar.classList.remove('active');
     overlay.classList.remove('active');
     document.body.style.overflow = '';
 }
 
 // ========== SMOOTH SCROLL ==========
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                closeSidebar();
+            }
+        });
     });
 });
 
@@ -67,13 +90,12 @@ function validateForm(formId) {
     const requiredFields = form.querySelectorAll('[required]');
 
     requiredFields.forEach(field => {
-        if (!field.value.trim()) {
+        const value = field.tagName === 'SELECT' ? field.value : field.value.trim();
+        if (!value) {
             isValid = false;
-            field.style.borderColor = '#dc2626';
-
-            // إزالة التحذير بعد 3 ثواني
+            field.classList.add('input-error');
             setTimeout(() => {
-                field.style.borderColor = '';
+                field.classList.remove('input-error');
             }, 3000);
         }
     });
@@ -81,31 +103,59 @@ function validateForm(formId) {
     return isValid;
 }
 
+// ========== ADMIN PASSWORD (SHA-256) ==========
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 // ========== ADMIN LOGIN ==========
 function checkAdminAuth() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
-    if (!isLoggedIn && window.location.pathname.includes('/pages/admin/')) {
-        if (!window.location.pathname.includes('login.html')) {
-            window.location.href = '/pages/admin/login.html';
+    const depth = getDepth();
+    if (!isLoggedIn && depth === 'admin') {
+        const currentPage = window.location.pathname.split('/').pop();
+        if (currentPage !== 'login.html') {
+            window.location.href = 'login.html';
         }
     }
 }
 
-function adminLogin(e) {
+async function adminLogin(e) {
     e.preventDefault();
-    const password = document.getElementById('adminPassword').value;
+    const passwordInput = document.getElementById('adminPassword');
+    if (!passwordInput) return;
 
-    if (password === 'Musymusssy101') {
+    const password = passwordInput.value;
+    const btn = e.target.querySelector('button[type="submit"]');
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
+    }
+
+    const hash = await hashPassword(password);
+
+    if (hash === ADMIN_PASSWORD_HASH) {
         sessionStorage.setItem('adminLoggedIn', 'true');
-        window.location.href = '/pages/admin/dashboard.html';
+        window.location.href = resolveAdminPath('dashboard.html');
     } else {
-        alert('كلمة المرور غير صحيحة!');
+        showNotification('كلمة المرور غير صحيحة!', 'error');
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> دخول';
+        }
+        passwordInput.value = '';
+        passwordInput.focus();
     }
 }
 
 function adminLogout() {
     sessionStorage.removeItem('adminLoggedIn');
-    window.location.href = '/pages/admin/login.html';
+    window.location.href = 'login.html';
 }
 
 // ========== PASSWORD RESET ==========
@@ -118,7 +168,7 @@ function showPasswordReset() {
 // ========== WHATSAPP LINKS ==========
 function openWhatsApp(phone, message = '') {
     const cleanPhone = phone.replace(/\D/g, '');
-    const url = message 
+    const url = message
         ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
         : `https://wa.me/${cleanPhone}`;
     window.open(url, '_blank');
@@ -133,88 +183,567 @@ function makeCall(phone) {
 function toggleFaq(element) {
     const answer = element.nextElementSibling;
     const icon = element.querySelector('.faq-item-icon');
+    if (!answer) return;
 
-    if (answer.style.display === 'block') {
-        answer.style.display = 'none';
-        icon.style.transform = 'rotate(0deg)';
-    } else {
-        answer.style.display = 'block';
-        icon.style.transform = 'rotate(90deg)';
+    const isOpen = answer.style.display === 'block';
+    answer.style.display = isOpen ? 'none' : 'block';
+    if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+}
+
+// ========== REQUESTS STORAGE ==========
+function getRequests() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+}
+
+function saveRequests(requests) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(requests));
+}
+
+function generateTrackingCode() {
+    const digits = Math.floor(100000 + Math.random() * 900000);
+    return 'KW-' + digits;
+}
+
+function addRequest(requestData) {
+    const requests = getRequests();
+    const newRequest = {
+        id: Date.now(),
+        trackingCode: generateTrackingCode(),
+        name: requestData.name,
+        phone: requestData.phone,
+        province: requestData.province,
+        provinceLabel: requestData.provinceLabel,
+        area: requestData.area,
+        specialty: requestData.specialty,
+        specialtyLabel: requestData.specialtyLabel,
+        condition: requestData.condition,
+        notes: requestData.notes || '',
+        status: 'new',
+        date: new Date().toLocaleDateString('ar-SY'),
+        dateTimestamp: Date.now(),
+        readByAdmin: false
+    };
+    requests.unshift(newRequest);
+    saveRequests(requests);
+    return newRequest;
+}
+
+function updateRequestStatus(id, status) {
+    const requests = getRequests();
+    const index = requests.findIndex(r => r.id === id);
+    if (index !== -1) {
+        requests[index].status = status;
+        requests[index].readByAdmin = true;
+        saveRequests(requests);
     }
 }
 
-// ========== APPOINTMENT STATUS ==========
-function updateAppointmentStatus(id, status) {
-    // في الإصدار الحالي (بدون backend) - نعرض رسالة تأكيد
-    const statusText = {
-        'confirmed': 'تم تأكيد الموعد',
-        'cancelled': 'تم إلغاء الموعد',
-        'completed': 'تم إنجاز الجلسة'
-    };
-
-    alert(statusText[status] || 'تم تحديث الحالة');
+function markAllRead() {
+    const requests = getRequests();
+    requests.forEach(r => { r.readByAdmin = true; });
+    saveRequests(requests);
 }
 
-// ========== TREATMENT PLAN GENERATOR ==========
-function generateTreatmentPlan(condition) {
-    const plans = {
-        'spine': {
-            title: 'خطة علاج العمود الفقري',
-            steps: [
-                { title: 'التقييم الأولي', desc: 'فحص شامل للعمود الفقري وتحديد نقاط الألم' },
-                { title: 'تمارين الإطالة', desc: 'إطالة عضلات الظهر والرقبة بشكل تدريجي' },
-                { title: 'تقوية العمود الفقري', desc: 'تمارين خاصة لتقوية عضلات الظهر' },
-                { title: 'تصحيح الوضعية', desc: 'تعلم الوضعية الصحيحة للجلوس والوقوف' }
-            ]
-        },
-        'nerve': {
-            title: 'خطة علاج الأعصاب والشلل',
-            steps: [
-                { title: 'تقييم الوظائف العصبية', desc: 'فحص حركة الأطراف والإحساس' },
-                { title: 'العلاج الكهربائي', desc: 'تحفيز العضلات بالتيار الكهربائي المنخفض' },
-                { title: 'تمارين الحركة', desc: 'تمرين المفاصل والعضلات المصابة يومياً' },
-                { title: 'تمارين التوازن', desc: 'استعادة التوازن والتنسيق الحركي' }
-            ]
-        },
-        'post-surgery': {
-            title: 'خطة التأهيل بعد الجراحة',
-            steps: [
-                { title: 'مرحلة التعافي المبكر', desc: 'تحريك المفاصل بلطف لتجنب التصلب' },
-                { title: 'تقوية العضلات', desc: 'تمارين تدريجية لتقوية العضلات حول منطقة الجراحة' },
-                { title: 'استعادة الحركة الكاملة', desc: 'إطالة وتمديد لاستعادة مدى الحركة الطبيعي' },
-                { title: 'العودة للنشاط', desc: 'تمارين وظيفية للعودة للحياة اليومية' }
-            ]
-        },
-        'rheumatism': {
-            title: 'خطة علاج الروماتيزم',
-            steps: [
-                { title: 'تخفيف الألم', desc: 'تقنيات تدليك خاصة لتخفيف التوتر العضلي' },
-                { title: 'تمارين المدى', desc: 'حفظ مرونة المفاصل ومنع التصلب' },
-                { title: 'تمارين الماء', desc: 'تمارين في الماء لتخفيف الضغط على المفاصل' },
-                { title: 'نصائح يومية', desc: 'تغييرات بسيطة في نمط الحياة لتقليل الألم' }
-            ]
-        },
-        'children': {
-            title: 'خطة تأهيل الأطفال',
-            steps: [
-                { title: 'تقييم النمو', desc: 'فحص تطور الحركة والمهارات الحركية' },
-                { title: 'العلاج باللعب', desc: 'أنشطة ممتعة مصممة لتطوير الحركة' },
-                { title: 'تقوية العضلات', desc: 'تمارين مناسبة للعمر لتقوية الجسم' },
-                { title: 'تدريب الوالدين', desc: 'تعليم الوالدين تمارين يمكن عملها في المنزل' }
-            ]
-        },
-        'sports': {
-            title: 'خطة إعادة التأهيل الرياضي',
-            steps: [
-                { title: 'تقييم الإصابة', desc: 'فحص دقيق لطبيعة الإصابة الرياضية' },
-                { title: 'تخفيف الالتهاب', desc: 'تقنيات تبريد ورفع لتقليل الورم' },
-                { title: 'استعادة القوة', desc: 'تمارين تدريجية لاستعادة قوة العضلات' },
-                { title: 'العودة للرياضة', desc: 'برنامج متدرج للعودة الآمنة للنشاط الرياضي' }
-            ]
-        }
-    };
+function getNewRequestsCount() {
+    return getRequests().filter(r => !r.readByAdmin).length;
+}
 
-    return plans[condition] || plans['spine'];
+function getStatusLabel(status) {
+    const labels = {
+        'new': 'جديد',
+        'reviewing': 'قيد المراجعة',
+        'assigned': 'تم التعيين',
+        'in_progress': 'قيد العلاج',
+        'completed': 'مكتمل',
+        'rejected': 'مرفوض'
+    };
+    return labels[status] || 'جديد';
+}
+
+function getStatusClass(status) {
+    const classes = {
+        'new': 'pending',
+        'reviewing': 'pending',
+        'assigned': 'approved',
+        'in_progress': 'approved',
+        'completed': 'completed',
+        'rejected': 'rejected'
+    };
+    return classes[status] || 'pending';
+}
+
+// ========== ADMIN NOTIFICATION BADGE ==========
+function updateAdminBadge() {
+    const badge = document.getElementById('adminNotifBadge');
+    if (!badge) return;
+    const count = getNewRequestsCount();
+    if (count > 0) {
+        badge.textContent = count;
+        badge.style.display = 'inline-flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+// ========== ADMIN DASHBOARD DATA ==========
+function loadDashboardStats() {
+    const requests = getRequests();
+    const newCount = requests.filter(r => r.status === 'new' || r.status === 'reviewing').length;
+    const inProgressCount = requests.filter(r => r.status === 'in_progress' || r.status === 'assigned').length;
+    const todayCount = requests.filter(r => {
+        const today = new Date().toLocaleDateString('ar-SY');
+        return r.date === today;
+    }).length;
+
+    const elNew = document.getElementById('statNew');
+    const elInProgress = document.getElementById('statInProgress');
+    const elToday = document.getElementById('statToday');
+    const elTotal = document.getElementById('statTotal');
+
+    if (elNew) elNew.textContent = newCount;
+    if (elInProgress) elInProgress.textContent = inProgressCount;
+    if (elToday) elToday.textContent = todayCount || requests.length;
+    if (elTotal) elTotal.textContent = requests.length;
+}
+
+function loadRecentRequests() {
+    const tbody = document.getElementById('recentRequestsBody');
+    if (!tbody) return;
+
+    const requests = getRequests().slice(0, 5);
+
+    if (requests.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:30px;">لا توجد طلبات بعد</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = requests.map(r => `
+        <tr>
+            <td>${r.name}</td>
+            <td>${r.provinceLabel || r.province}</td>
+            <td>${r.specialtyLabel || r.specialty || 'غير محدد'}</td>
+            <td><span class="admin-badge ${getStatusClass(r.status)}">${getStatusLabel(r.status)}</span></td>
+            <td>
+                ${r.status === 'new' ? `
+                    <button class="admin-btn admin-btn-sm admin-btn-success" onclick="quickAccept(${r.id})">قبول</button>
+                    <button class="admin-btn admin-btn-sm admin-btn-danger" onclick="quickReject(${r.id})">رفض</button>
+                ` : `
+                    <a href="patients.html" class="admin-btn admin-btn-sm admin-btn-primary">عرض الكل</a>
+                `}
+            </td>
+        </tr>
+    `).join('');
+}
+
+function quickAccept(id) {
+    updateRequestStatus(id, 'reviewing');
+    loadRecentRequests();
+    loadDashboardStats();
+    updateAdminBadge();
+    showNotification('تم قبول الطلب', 'success');
+}
+
+function quickReject(id) {
+    updateRequestStatus(id, 'rejected');
+    loadRecentRequests();
+    loadDashboardStats();
+    updateAdminBadge();
+    showNotification('تم رفض الطلب', 'error');
+}
+
+// ========== ADMIN PATIENTS PAGE ==========
+function loadPatientRequests() {
+    const tbody = document.getElementById('patientsTableBody');
+    if (!tbody) return;
+
+    const requests = getRequests();
+
+    if (requests.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;"><i class="fas fa-inbox" style="font-size:32px;display:block;margin-bottom:12px;opacity:0.4;"></i>لا توجد طلبات بعد</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = requests.map((r, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>
+                <div style="font-weight:600;">${r.name}</div>
+                <div style="font-size:12px;color:var(--gray);">${r.trackingCode}</div>
+            </td>
+            <td>${r.phone}</td>
+            <td>${r.provinceLabel || r.province}</td>
+            <td>${r.specialtyLabel || r.specialty || 'غير محدد'}</td>
+            <td><span class="admin-badge ${getStatusClass(r.status)}">${getStatusLabel(r.status)}</span></td>
+            <td>
+                <select class="status-select" onchange="changeStatus(${r.id}, this.value)" style="font-family:'Tajawal',sans-serif;font-size:12px;padding:4px 8px;border:1px solid var(--gray-lighter);border-radius:6px;background:white;cursor:pointer;">
+                    <option value="new" ${r.status === 'new' ? 'selected' : ''}>جديد</option>
+                    <option value="reviewing" ${r.status === 'reviewing' ? 'selected' : ''}>قيد المراجعة</option>
+                    <option value="assigned" ${r.status === 'assigned' ? 'selected' : ''}>تم التعيين</option>
+                    <option value="in_progress" ${r.status === 'in_progress' ? 'selected' : ''}>قيد العلاج</option>
+                    <option value="completed" ${r.status === 'completed' ? 'selected' : ''}>مكتمل</option>
+                    <option value="rejected" ${r.status === 'rejected' ? 'selected' : ''}>مرفوض</option>
+                </select>
+                <button class="admin-btn admin-btn-sm admin-btn-primary" onclick="viewRequest(${r.id})" style="margin-top:4px;">عرض</button>
+            </td>
+        </tr>
+    `).join('');
+
+    markAllRead();
+    updateAdminBadge();
+}
+
+function changeStatus(id, status) {
+    updateRequestStatus(id, status);
+    showNotification('تم تحديث الحالة', 'success');
+    updateAdminBadge();
+}
+
+function viewRequest(id) {
+    const requests = getRequests();
+    const r = requests.find(req => req.id === id);
+    if (!r) return;
+
+    const modal = document.getElementById('requestModal');
+    const body = document.getElementById('requestModalBody');
+    if (!modal || !body) return;
+
+    body.innerHTML = `
+        <div style="margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h3 style="font-size:18px;font-weight:800;">${r.name}</h3>
+                <span class="admin-badge ${getStatusClass(r.status)}">${getStatusLabel(r.status)}</span>
+            </div>
+            <div class="profile-info-row"><span class="profile-info-label">كود التتبع</span><span class="profile-info-value" style="color:var(--primary);font-family:monospace;">${r.trackingCode}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">رقم الهاتف</span><span class="profile-info-value">${r.phone}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">المحافظة</span><span class="profile-info-value">${r.provinceLabel || r.province}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">المنطقة</span><span class="profile-info-value">${r.area}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">التخصص</span><span class="profile-info-value">${r.specialtyLabel || r.specialty || 'غير محدد'}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">تاريخ الطلب</span><span class="profile-info-value">${r.date}</span></div>
+        </div>
+        <div style="background:var(--bg);border-radius:var(--radius);padding:16px;margin-bottom:16px;">
+            <div style="font-weight:700;margin-bottom:8px;color:var(--dark);">وصف الحالة:</div>
+            <div style="font-size:14px;color:var(--gray);line-height:1.8;">${r.condition}</div>
+        </div>
+        ${r.notes ? `
+        <div style="background:var(--primary-light);border-radius:var(--radius);padding:16px;">
+            <div style="font-weight:700;margin-bottom:8px;color:var(--primary-dark);">ملاحظات إضافية:</div>
+            <div style="font-size:14px;color:var(--gray);line-height:1.8;">${r.notes}</div>
+        </div>` : ''}
+        <div style="margin-top:16px;display:flex;gap:8px;">
+            <a href="tel:${r.phone}" class="admin-btn admin-btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;">
+                <i class="fas fa-phone"></i> اتصال
+            </a>
+            <a href="https://wa.me/963${r.phone.replace(/^0/, '')}" target="_blank" class="admin-btn admin-btn-success" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;">
+                <i class="fab fa-whatsapp"></i> واتساب
+            </a>
+        </div>
+    `;
+
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    const modal = document.getElementById('requestModal');
+    if (modal) modal.style.display = 'none';
+}
+
+function exportCSV() {
+    const requests = getRequests();
+    if (requests.length === 0) {
+        showNotification('لا توجد بيانات للتصدير', 'error');
+        return;
+    }
+
+    const headers = ['كود التتبع', 'الاسم', 'الهاتف', 'المحافظة', 'المنطقة', 'التخصص', 'الحالة', 'التاريخ', 'وصف الحالة'];
+    const rows = requests.map(r => [
+        r.trackingCode,
+        r.name,
+        r.phone,
+        r.provinceLabel || r.province,
+        r.area,
+        r.specialtyLabel || r.specialty || 'غير محدد',
+        getStatusLabel(r.status),
+        r.date,
+        '"' + (r.condition || '').replace(/"/g, '""') + '"'
+    ]);
+
+    const csvContent = '\uFEFF' + [headers, ...rows].map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'طلبات-خطوة-وشفاء-' + new Date().toLocaleDateString('en') + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotification('تم تصدير الملف بنجاح', 'success');
+}
+
+// ========== REQUEST TRACKING ==========
+function trackRequest() {
+    const input = document.getElementById('trackingInput');
+    if (!input) return;
+
+    const code = input.value.trim().toUpperCase();
+    if (!code) {
+        showNotification('يرجى إدخال كود التتبع', 'error');
+        return;
+    }
+
+    const requests = getRequests();
+    const request = requests.find(r => r.trackingCode === code);
+    const resultDiv = document.getElementById('trackingResult');
+    if (!resultDiv) return;
+
+    if (!request) {
+        resultDiv.innerHTML = `
+            <div class="tracking-not-found">
+                <i class="fas fa-search" style="font-size:40px;color:var(--gray-light);margin-bottom:12px;display:block;"></i>
+                <div style="font-size:16px;font-weight:600;color:var(--gray);">لم يتم العثور على الطلب</div>
+                <div style="font-size:14px;color:var(--gray-light);margin-top:8px;">تأكد من الكود وأعد المحاولة</div>
+            </div>`;
+        return;
+    }
+
+    const steps = [
+        { key: 'new', label: 'استلام الطلب', icon: 'fa-paper-plane' },
+        { key: 'reviewing', label: 'قيد المراجعة', icon: 'fa-search' },
+        { key: 'assigned', label: 'تم التعيين', icon: 'fa-user-check' },
+        { key: 'in_progress', label: 'قيد العلاج', icon: 'fa-heartbeat' },
+        { key: 'completed', label: 'مكتمل', icon: 'fa-check-circle' }
+    ];
+
+    const statusOrder = ['new', 'reviewing', 'assigned', 'in_progress', 'completed'];
+    const currentIndex = statusOrder.indexOf(request.status);
+    const isRejected = request.status === 'rejected';
+
+    resultDiv.innerHTML = `
+        <div class="tracking-card">
+            <div class="tracking-header">
+                <div class="tracking-code">${request.trackingCode}</div>
+                <span class="admin-badge ${getStatusClass(request.status)}">${getStatusLabel(request.status)}</span>
+            </div>
+            <div class="tracking-info">
+                <div class="tracking-row"><span>الاسم</span><span>${request.name}</span></div>
+                <div class="tracking-row"><span>المحافظة</span><span>${request.provinceLabel || request.province}</span></div>
+                <div class="tracking-row"><span>تاريخ الطلب</span><span>${request.date}</span></div>
+            </div>
+            ${isRejected ? `
+            <div style="background:rgba(220,38,38,0.08);border-radius:var(--radius);padding:16px;text-align:center;margin-top:16px;">
+                <i class="fas fa-times-circle" style="color:var(--danger);font-size:28px;margin-bottom:8px;display:block;"></i>
+                <div style="font-weight:700;color:var(--danger);">تم رفض الطلب</div>
+                <div style="font-size:13px;color:var(--gray);margin-top:6px;">للاستفسار تواصل معنا عبر واتساب</div>
+                <a href="https://wa.me/963938626949" class="btn btn-whatsapp" style="max-width:180px;margin-top:12px;font-size:14px;padding:10px;">
+                    <i class="fab fa-whatsapp"></i> واتساب
+                </a>
+            </div>` : `
+            <div class="tracking-steps">
+                ${steps.map((step, i) => {
+                    const isDone = i <= currentIndex;
+                    const isCurrent = i === currentIndex;
+                    return `
+                    <div class="tracking-step ${isDone ? 'done' : ''} ${isCurrent ? 'current' : ''}">
+                        <div class="tracking-step-icon">
+                            <i class="fas ${isDone ? 'fa-check' : step.icon}"></i>
+                        </div>
+                        <div class="tracking-step-label">${step.label}</div>
+                        ${i < steps.length - 1 ? '<div class="tracking-step-line"></div>' : ''}
+                    </div>`;
+                }).join('')}
+            </div>`}
+        </div>`;
+}
+
+// ========== WHATSAPP ADMIN NOTIFICATION ==========
+const ADMIN_WHATSAPP = '963938626949';
+
+function sendAdminWhatsApp(message) {
+    window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
+}
+
+function buildRequestWhatsApp(request) {
+    return `🔔 طلب علاج جديد — خطوة وشفاء\n\nكود التتبع: ${request.trackingCode}\nالاسم: ${request.name}\nالهاتف: ${request.phone}\nالمحافظة: ${request.provinceLabel || request.province}\nالمنطقة: ${request.area}\nالتخصص: ${request.specialtyLabel || 'غير محدد'}\n\nوصف الحالة:\n${request.condition}${request.notes ? '\n\nملاحظات: ' + request.notes : ''}\n\n— منصة خطوة وشفاء`;
+}
+
+function buildTherapistWhatsApp(therapist) {
+    return `👨‍⚕️ طلب تسجيل معالج جديد — خطوة وشفاء\n\nالاسم: ${therapist.name}\nالهاتف: ${therapist.phone}\nالمحافظة: ${therapist.provinceLabel || therapist.province}\nالمنطقة: ${therapist.area}\nالتخصص: ${therapist.specialtyLabel}\nزيارات منزلية: ${therapist.homeVisit ? 'نعم' : 'لا'}${therapist.notes ? '\n\nالخبرات والشهادات:\n' + therapist.notes : ''}\n\n— منصة خطوة وشفاء`;
+}
+
+// ========== THERAPISTS STORAGE ==========
+const THERAPISTS_KEY = 'kw_therapists';
+
+function getTherapists() {
+    const data = localStorage.getItem(THERAPISTS_KEY);
+    return data ? JSON.parse(data) : [];
+}
+
+function saveTherapists(therapists) {
+    localStorage.setItem(THERAPISTS_KEY, JSON.stringify(therapists));
+}
+
+function addTherapist(data) {
+    const therapists = getTherapists();
+    const newTherapist = {
+        id: Date.now(),
+        name: data.name,
+        phone: data.phone,
+        province: data.province,
+        provinceLabel: data.provinceLabel,
+        area: data.area,
+        specialty: data.specialty,
+        specialtyLabel: data.specialtyLabel,
+        homeVisit: data.homeVisit,
+        notes: data.notes || '',
+        status: 'pending',
+        date: new Date().toLocaleDateString('ar-SY'),
+        dateTimestamp: Date.now()
+    };
+    therapists.unshift(newTherapist);
+    saveTherapists(therapists);
+    return newTherapist;
+}
+
+function updateTherapistStatus(id, status) {
+    const therapists = getTherapists();
+    const index = therapists.findIndex(t => t.id === id);
+    if (index !== -1) {
+        therapists[index].status = status;
+        saveTherapists(therapists);
+    }
+}
+
+function getTherapistStatusLabel(status) {
+    const labels = { pending: 'بانتظار التفعيل', approved: 'معتمد', rejected: 'مرفوض', suspended: 'موقوف' };
+    return labels[status] || 'بانتظار التفعيل';
+}
+
+function getTherapistStatusClass(status) {
+    const classes = { pending: 'pending', approved: 'approved', rejected: 'rejected', suspended: 'rejected' };
+    return classes[status] || 'pending';
+}
+
+function loadTherapistsTable() {
+    const tbody = document.getElementById('therapistsTableBody');
+    if (!tbody) return;
+
+    const therapists = getTherapists();
+    if (therapists.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;"><i class="fas fa-user-md" style="font-size:32px;display:block;margin-bottom:12px;opacity:0.4;"></i>لا توجد طلبات تسجيل بعد</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = therapists.map((t, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>
+                <div style="font-weight:600;">${t.name}</div>
+                <div style="font-size:11px;color:var(--gray-light);">${t.date}</div>
+            </td>
+            <td>${t.phone}</td>
+            <td>${t.provinceLabel || t.province}</td>
+            <td>${t.specialtyLabel}</td>
+            <td><span class="admin-badge ${getTherapistStatusClass(t.status)}">${getTherapistStatusLabel(t.status)}</span></td>
+            <td>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                    ${t.status === 'pending' ? `
+                        <button class="admin-btn admin-btn-sm admin-btn-success" onclick="approveTherapist(${t.id})">تفعيل</button>
+                        <button class="admin-btn admin-btn-sm admin-btn-danger" onclick="rejectTherapist(${t.id})">رفض</button>
+                    ` : `
+                        <button class="admin-btn admin-btn-sm admin-btn-primary" onclick="viewTherapist(${t.id})">عرض</button>
+                        ${t.status === 'approved' ? `<button class="admin-btn admin-btn-sm admin-btn-danger" onclick="suspendTherapist(${t.id})">تعطيل</button>` : ''}
+                    `}
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function approveTherapist(id) {
+    updateTherapistStatus(id, 'approved');
+    showNotification('تم تفعيل المعالج', 'success');
+    loadTherapistsTable();
+}
+
+function rejectTherapist(id) {
+    updateTherapistStatus(id, 'rejected');
+    showNotification('تم رفض طلب التسجيل', 'error');
+    loadTherapistsTable();
+}
+
+function suspendTherapist(id) {
+    updateTherapistStatus(id, 'suspended');
+    showNotification('تم تعطيل حساب المعالج', 'error');
+    loadTherapistsTable();
+}
+
+function viewTherapist(id) {
+    const therapists = getTherapists();
+    const t = therapists.find(th => th.id === id);
+    if (!t) return;
+
+    const modal = document.getElementById('requestModal');
+    const body = document.getElementById('requestModalBody');
+    if (!modal || !body) return;
+
+    body.innerHTML = `
+        <div style="margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h3 style="font-size:18px;font-weight:800;">${t.name}</h3>
+                <span class="admin-badge ${getTherapistStatusClass(t.status)}">${getTherapistStatusLabel(t.status)}</span>
+            </div>
+            <div class="profile-info-row"><span class="profile-info-label">رقم الهاتف</span><span class="profile-info-value">${t.phone}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">المحافظة</span><span class="profile-info-value">${t.provinceLabel}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">المنطقة</span><span class="profile-info-value">${t.area}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">التخصص</span><span class="profile-info-value">${t.specialtyLabel}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">زيارات منزلية</span><span class="profile-info-value">${t.homeVisit ? 'نعم ✓' : 'لا'}</span></div>
+            <div class="profile-info-row"><span class="profile-info-label">تاريخ التسجيل</span><span class="profile-info-value">${t.date}</span></div>
+        </div>
+        ${t.notes ? `
+        <div style="background:var(--bg);border-radius:var(--radius);padding:16px;margin-bottom:16px;">
+            <div style="font-weight:700;margin-bottom:8px;">الخبرات والشهادات:</div>
+            <div style="font-size:14px;color:var(--gray);line-height:1.8;">${t.notes}</div>
+        </div>` : ''}
+        <div style="display:flex;gap:8px;margin-top:16px;">
+            <a href="tel:${t.phone}" class="admin-btn admin-btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;">
+                <i class="fas fa-phone"></i> اتصال
+            </a>
+            <a href="https://wa.me/963${t.phone.replace(/^0/, '')}" target="_blank" class="admin-btn admin-btn-success" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;">
+                <i class="fab fa-whatsapp"></i> واتساب
+            </a>
+        </div>`;
+    modal.style.display = 'flex';
+}
+
+// ========== PWA INSTALL PROMPT ==========
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) banner.style.display = 'flex';
+});
+
+window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) banner.style.display = 'none';
+});
+
+function installPWA() {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(() => {
+        deferredInstallPrompt = null;
+        const banner = document.getElementById('pwaInstallBanner');
+        if (banner) banner.style.display = 'none';
+    });
+}
+
+function dismissPWABanner() {
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) banner.style.display = 'none';
+    sessionStorage.setItem('pwaBannerDismissed', '1');
 }
 
 // ========== IMAGE UPLOAD PREVIEW ==========
@@ -222,7 +751,7 @@ function previewImage(input, previewId) {
     const preview = document.getElementById(previewId);
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             preview.src = e.target.result;
             preview.style.display = 'block';
         };
@@ -230,19 +759,13 @@ function previewImage(input, previewId) {
     }
 }
 
-// ========== LOCAL STORAGE HELPERS ==========
-function saveToStorage(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-}
-
-function getFromStorage(key) {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
-}
-
 // ========== NOTIFICATIONS ==========
 function showNotification(message, type = 'info') {
+    const existing = document.querySelector('.kw-notification');
+    if (existing) existing.remove();
+
     const notification = document.createElement('div');
+    notification.className = 'kw-notification';
     notification.style.cssText = `
         position: fixed;
         top: 80px;
@@ -254,9 +777,13 @@ function showNotification(message, type = 'info') {
         border-radius: 12px;
         font-family: 'Tajawal', sans-serif;
         font-weight: 600;
+        font-size: 15px;
         z-index: 9999;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         animation: fadeInUp 0.3s ease;
+        max-width: 320px;
+        text-align: center;
+        direction: rtl;
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
@@ -269,31 +796,66 @@ function showNotification(message, type = 'info') {
 }
 
 // ========== INIT ==========
-document.addEventListener('DOMContentLoaded', function() {
-    // التحقق من صلاحية الإدارة
+document.addEventListener('DOMContentLoaded', function () {
     checkAdminAuth();
+    updateAdminBadge();
 
-    // إغلاق السايدبار عند النقر خارجها
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         const sidebar = document.getElementById('sidebar');
         const menuBtn = document.querySelector('.menu-btn');
-
         if (sidebar && sidebar.classList.contains('active')) {
-            if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+            if (!sidebar.contains(e.target) && menuBtn && !menuBtn.contains(e.target)) {
                 closeSidebar();
             }
         }
+
+        const modal = document.getElementById('requestModal');
+        if (modal && e.target === modal) {
+            closeModal();
+        }
     });
 
-    // تأثيرات الظهور
     document.querySelectorAll('.card, .specialty-item, .province-item').forEach((el, i) => {
         el.style.animationDelay = `${i * 0.1}s`;
     });
+
+    if (document.getElementById('recentRequestsBody')) {
+        loadDashboardStats();
+        loadRecentRequests();
+    }
+
+    if (document.getElementById('patientsTableBody')) {
+        loadPatientRequests();
+    }
+
+    if (document.getElementById('therapistsTableBody')) {
+        loadTherapistsTable();
+    }
+
+    const pwaBanner = document.getElementById('pwaInstallBanner');
+    if (pwaBanner && sessionStorage.getItem('pwaBannerDismissed')) {
+        pwaBanner.style.display = 'none';
+    }
+
+    const trackBtn = document.getElementById('trackBtn');
+    if (trackBtn) {
+        trackBtn.addEventListener('click', trackRequest);
+    }
+    const trackInput = document.getElementById('trackingInput');
+    if (trackInput) {
+        trackInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') trackRequest();
+        });
+    }
 });
 
-// ========== SERVICE WORKER (للـ PWA) ==========
+// ========== SERVICE WORKER (PWA) ==========
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker registered'))
-        .catch(err => console.log('Service Worker registration failed'));
+    const swPath = (() => {
+        const path = window.location.pathname;
+        if (path.includes('/pages/admin/')) return '../../sw.js';
+        if (path.includes('/pages/')) return '../sw.js';
+        return '/sw.js';
+    })();
+    navigator.serviceWorker.register(swPath).catch(() => {});
 }
