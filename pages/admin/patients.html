@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة المرضى - خطوة وشفاء</title>
+    <title>إدارة الطلبات - خطوة وشفاء</title>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -14,7 +14,7 @@
                 <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">
                     <i class="fas fa-shoe-prints"></i>
                 </div>
-                <h1>إدارة المرضى</h1>
+                <h1>إدارة الطلبات</h1>
             </div>
             <button class="admin-logout" onclick="adminLogout()">
                 <i class="fas fa-sign-out-alt"></i>
@@ -23,20 +23,43 @@
         </div>
 
         <div style="padding:20px;max-width:1200px;margin:0 auto;">
-            <div class="admin-card" style="margin-bottom:20px;">
+            <div class="admin-card">
                 <div class="admin-card-header">
-                    <div class="admin-card-title">قائمة المرضى المسجلين</div>
-                    <a href="dashboard.html" style="color:var(--primary);font-size:14px;text-decoration:none;">
-                        <i class="fas fa-arrow-right"></i>
-                        العودة للوحة التحكم
-                    </a>
+                    <div class="admin-card-title">
+                        <i class="fas fa-list" style="color:var(--primary);margin-left:8px;"></i>
+                        قائمة الطلبات
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button class="admin-btn admin-btn-primary" onclick="exportCSV()" style="font-size:13px;">
+                            <i class="fas fa-file-csv"></i>
+                            تصدير CSV
+                        </button>
+                        <a href="dashboard.html" style="color:var(--primary);font-size:14px;text-decoration:none;">
+                            <i class="fas fa-arrow-right"></i>
+                            العودة
+                        </a>
+                    </div>
                 </div>
+
+                <!-- Filter Bar -->
+                <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+                    <button class="filter-btn active" onclick="filterRequests('all', this)">الكل</button>
+                    <button class="filter-btn" onclick="filterRequests('new', this)">
+                        جديد <span id="filterBadgeNew" class="filter-badge"></span>
+                    </button>
+                    <button class="filter-btn" onclick="filterRequests('reviewing', this)">قيد المراجعة</button>
+                    <button class="filter-btn" onclick="filterRequests('assigned', this)">تم التعيين</button>
+                    <button class="filter-btn" onclick="filterRequests('in_progress', this)">قيد العلاج</button>
+                    <button class="filter-btn" onclick="filterRequests('completed', this)">مكتمل</button>
+                    <button class="filter-btn" onclick="filterRequests('rejected', this)">مرفوض</button>
+                </div>
+
                 <div style="overflow-x:auto;">
                     <table class="admin-table">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>الاسم</th>
+                                <th>الاسم / الكود</th>
                                 <th>الهاتف</th>
                                 <th>المحافظة</th>
                                 <th>التخصص</th>
@@ -44,30 +67,9 @@
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="patientsTableBody">
                             <tr>
-                                <td>1</td>
-                                <td>أحمد محمد</td>
-                                <td>0933xxxxxx</td>
-                                <td>دمشق</td>
-                                <td>عظام</td>
-                                <td><span class="admin-badge pending">جديد</span></td>
-                                <td>
-                                    <button class="admin-btn admin-btn-sm admin-btn-primary">عرض</button>
-                                    <button class="admin-btn admin-btn-sm admin-btn-success">تعيين معالج</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>سارة علي</td>
-                                <td>0955xxxxxx</td>
-                                <td>حلب</td>
-                                <td>أعصاب</td>
-                                <td><span class="admin-badge approved">قيد العلاج</span></td>
-                                <td>
-                                    <button class="admin-btn admin-btn-sm admin-btn-primary">عرض</button>
-                                    <button class="admin-btn admin-btn-sm admin-btn-primary">الخطة العلاجية</button>
-                                </td>
+                                <td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">جاري التحميل...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -75,6 +77,100 @@
             </div>
         </div>
     </div>
+
+    <!-- Request Details Modal -->
+    <div id="requestModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9000;align-items:center;justify-content:center;padding:20px;">
+        <div style="background:white;border-radius:var(--radius-lg);width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid var(--gray-lighter);">
+                <h3 style="font-size:18px;font-weight:800;">تفاصيل الطلب</h3>
+                <button onclick="closeModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray);">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="requestModalBody" style="padding:20px;"></div>
+        </div>
+    </div>
+
     <script src="../../js/main.js"></script>
+    <script>
+        let currentFilter = 'all';
+
+        function filterRequests(status, btn) {
+            currentFilter = status;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const requests = getRequests();
+            const filtered = status === 'all' ? requests : requests.filter(r => r.status === status);
+            renderRequests(filtered);
+        }
+
+        function renderRequests(requests) {
+            const tbody = document.getElementById('patientsTableBody');
+            if (!tbody) return;
+
+            if (requests.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">
+                    <i class="fas fa-inbox" style="font-size:32px;display:block;margin-bottom:12px;opacity:0.4;"></i>
+                    لا توجد طلبات في هذا القسم
+                </td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = requests.map((r, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>
+                        <div style="font-weight:600;">${r.name}</div>
+                        <div style="font-size:12px;color:var(--primary);font-family:monospace;">${r.trackingCode}</div>
+                        <div style="font-size:11px;color:var(--gray-light);">${r.date}</div>
+                    </td>
+                    <td>${r.phone}</td>
+                    <td>${r.provinceLabel || r.province}</td>
+                    <td>${r.specialtyLabel || r.specialty || 'غير محدد'}</td>
+                    <td><span class="admin-badge ${getStatusClass(r.status)}">${getStatusLabel(r.status)}</span></td>
+                    <td>
+                        <div style="display:flex;flex-direction:column;gap:4px;">
+                            <select onchange="changeStatus(${r.id}, this.value)" style="font-family:'Tajawal',sans-serif;font-size:12px;padding:4px 8px;border:1px solid var(--gray-lighter);border-radius:6px;background:white;cursor:pointer;">
+                                <option value="new" ${r.status==='new'?'selected':''}>جديد</option>
+                                <option value="reviewing" ${r.status==='reviewing'?'selected':''}>قيد المراجعة</option>
+                                <option value="assigned" ${r.status==='assigned'?'selected':''}>تم التعيين</option>
+                                <option value="in_progress" ${r.status==='in_progress'?'selected':''}>قيد العلاج</option>
+                                <option value="completed" ${r.status==='completed'?'selected':''}>مكتمل</option>
+                                <option value="rejected" ${r.status==='rejected'?'selected':''}>مرفوض</option>
+                            </select>
+                            <button class="admin-btn admin-btn-sm admin-btn-primary" onclick="viewRequest(${r.id})">
+                                <i class="fas fa-eye"></i> عرض
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const allRequests = getRequests();
+            renderRequests(allRequests);
+            markAllRead();
+            updateAdminBadge();
+
+            const newCount = allRequests.filter(r => r.status === 'new').length;
+            const badge = document.getElementById('filterBadgeNew');
+            if (badge && newCount > 0) {
+                badge.textContent = newCount;
+                badge.style.display = 'inline-flex';
+            }
+        });
+
+        const origChangeStatus = changeStatus;
+        function changeStatus(id, status) {
+            updateRequestStatus(id, status);
+            showNotification('تم تحديث الحالة', 'success');
+            updateAdminBadge();
+            const requests = getRequests();
+            const filtered = currentFilter === 'all' ? requests : requests.filter(r => r.status === currentFilter);
+            renderRequests(filtered);
+        }
+    </script>
 </body>
 </html>
