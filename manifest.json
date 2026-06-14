@@ -1,52 +1,47 @@
 {
   "name": "خطوة وشفاء - العلاج الطبيعي المنزلي",
   "short_name": "خطوة وشفاء",
-  "description": "منصة العلاج الطبيعي المنزلي في سوريا",
+  "description": "منصة العلاج الطبيعي المنزلي في سوريا — نوصلك بأفضل المعالجين الفيزيائيين المعتمدين في محافظتك",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0066a1",
+  "background_color": "#ffffff",
   "theme_color": "#0066a1",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["health", "medical", "lifestyle"],
   "icons": [
     {
-      "src": "images/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
-      "src": "images/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "اطلب معالجاً",
+      "short_name": "طلب",
+      "description": "أرسل طلب علاج جديد",
+      "url": "/pages/request.html",
+      "icons": [{ "src": "images/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "تتبع طلبك",
+      "short_name": "تتبع",
+      "description": "تتبع حالة طلبك",
+      "url": "/pages/track.html",
+      "icons": [{ "src": "images/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "تواصل معنا",
+      "short_name": "دعم",
+      "description": "الدعم الفني",
+      "url": "/pages/support.html",
+      "icons": [{ "src": "images/icon.svg", "sizes": "any" }]
+    }
+  ],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false
 }
