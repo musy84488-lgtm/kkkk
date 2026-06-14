@@ -190,14 +190,27 @@ function toggleFaq(element) {
     if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
 }
 
-// ========== REQUESTS STORAGE ==========
-function getRequests() {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+// ========== FIREBASE CACHE ==========
+let _requestsCache = [];
+let _therapistsCache = [];
+
+async function refreshCache() {
+    if (typeof db === 'undefined') return;
+    try {
+        const [reqSnap, thSnap] = await Promise.all([
+            db.collection('requests').orderBy('dateTimestamp', 'desc').get(),
+            db.collection('therapists').orderBy('dateTimestamp', 'desc').get()
+        ]);
+        _requestsCache = reqSnap.docs.map(d => ({ ...d.data(), _docId: d.id }));
+        _therapistsCache = thSnap.docs.map(d => ({ ...d.data(), _docId: d.id }));
+    } catch (e) {
+        console.warn('Firebase error:', e);
+    }
 }
 
-function saveRequests(requests) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(requests));
+// ========== REQUESTS FIRESTORE ==========
+function getRequests() {
+    return _requestsCache;
 }
 
 function generateTrackingCode() {
@@ -205,10 +218,10 @@ function generateTrackingCode() {
     return 'KW-' + digits;
 }
 
-function addRequest(requestData) {
-    const requests = getRequests();
+async function addRequest(requestData) {
+    const id = Date.now();
     const newRequest = {
-        id: Date.now(),
+        id,
         trackingCode: generateTrackingCode(),
         name: requestData.name,
         phone: requestData.phone,
@@ -221,32 +234,37 @@ function addRequest(requestData) {
         notes: requestData.notes || '',
         status: 'new',
         date: new Date().toLocaleDateString('ar-SY'),
-        dateTimestamp: Date.now(),
+        dateTimestamp: id,
         readByAdmin: false
     };
-    requests.unshift(newRequest);
-    saveRequests(requests);
+    if (typeof db !== 'undefined') {
+        await db.collection('requests').doc(String(id)).set(newRequest);
+        await refreshCache();
+    }
     return newRequest;
 }
 
-function updateRequestStatus(id, status) {
-    const requests = getRequests();
-    const index = requests.findIndex(r => r.id === id);
-    if (index !== -1) {
-        requests[index].status = status;
-        requests[index].readByAdmin = true;
-        saveRequests(requests);
+async function updateRequestStatus(id, status) {
+    if (typeof db !== 'undefined') {
+        await db.collection('requests').doc(String(id)).update({ status, readByAdmin: true });
+        await refreshCache();
     }
 }
 
-function markAllRead() {
-    const requests = getRequests();
-    requests.forEach(r => { r.readByAdmin = true; });
-    saveRequests(requests);
+async function markAllRead() {
+    if (typeof db === 'undefined') return;
+    const unread = _requestsCache.filter(r => !r.readByAdmin);
+    if (unread.length === 0) return;
+    const batch = db.batch();
+    unread.forEach(r => {
+        batch.update(db.collection('requests').doc(String(r.id)), { readByAdmin: true });
+    });
+    await batch.commit();
+    await refreshCache();
 }
 
 function getNewRequestsCount() {
-    return getRequests().filter(r => !r.readByAdmin).length;
+    return _requestsCache.filter(r => !r.readByAdmin).length;
 }
 
 function getStatusLabel(status) {
@@ -336,16 +354,16 @@ function loadRecentRequests() {
     `).join('');
 }
 
-function quickAccept(id) {
-    updateRequestStatus(id, 'reviewing');
+async function quickAccept(id) {
+    await updateRequestStatus(id, 'reviewing');
     loadRecentRequests();
     loadDashboardStats();
     updateAdminBadge();
     showNotification('تم قبول الطلب', 'success');
 }
 
-function quickReject(id) {
-    updateRequestStatus(id, 'rejected');
+async function quickReject(id) {
+    await updateRequestStatus(id, 'rejected');
     loadRecentRequests();
     loadDashboardStats();
     updateAdminBadge();
@@ -393,8 +411,8 @@ function loadPatientRequests() {
     updateAdminBadge();
 }
 
-function changeStatus(id, status) {
-    updateRequestStatus(id, status);
+async function changeStatus(id, status) {
+    await updateRequestStatus(id, status);
     showNotification('تم تحديث الحالة', 'success');
     updateAdminBadge();
 }
@@ -480,7 +498,8 @@ function exportCSV() {
 }
 
 // ========== REQUEST TRACKING ==========
-function trackRequest() {
+async function trackRequest() {
+    await refreshCache();
     const input = document.getElementById('trackingInput');
     if (!input) return;
 
@@ -569,22 +588,15 @@ function buildTherapistWhatsApp(therapist) {
     return `👨‍⚕️ طلب تسجيل معالج جديد — خطوة وشفاء\n\nالاسم: ${therapist.name}\nالهاتف: ${therapist.phone}\nالمحافظة: ${therapist.provinceLabel || therapist.province}\nالمنطقة: ${therapist.area}\nالتخصص: ${therapist.specialtyLabel}\nزيارات منزلية: ${therapist.homeVisit ? 'نعم' : 'لا'}${therapist.notes ? '\n\nالخبرات والشهادات:\n' + therapist.notes : ''}\n\n— منصة خطوة وشفاء`;
 }
 
-// ========== THERAPISTS STORAGE ==========
-const THERAPISTS_KEY = 'kw_therapists';
-
+// ========== THERAPISTS FIRESTORE ==========
 function getTherapists() {
-    const data = localStorage.getItem(THERAPISTS_KEY);
-    return data ? JSON.parse(data) : [];
+    return _therapistsCache;
 }
 
-function saveTherapists(therapists) {
-    localStorage.setItem(THERAPISTS_KEY, JSON.stringify(therapists));
-}
-
-function addTherapist(data) {
-    const therapists = getTherapists();
+async function addTherapist(data) {
+    const id = Date.now();
     const newTherapist = {
-        id: Date.now(),
+        id,
         name: data.name,
         phone: data.phone,
         province: data.province,
@@ -596,19 +608,19 @@ function addTherapist(data) {
         notes: data.notes || '',
         status: 'pending',
         date: new Date().toLocaleDateString('ar-SY'),
-        dateTimestamp: Date.now()
+        dateTimestamp: id
     };
-    therapists.unshift(newTherapist);
-    saveTherapists(therapists);
+    if (typeof db !== 'undefined') {
+        await db.collection('therapists').doc(String(id)).set(newTherapist);
+        await refreshCache();
+    }
     return newTherapist;
 }
 
-function updateTherapistStatus(id, status) {
-    const therapists = getTherapists();
-    const index = therapists.findIndex(t => t.id === id);
-    if (index !== -1) {
-        therapists[index].status = status;
-        saveTherapists(therapists);
+async function updateTherapistStatus(id, status) {
+    if (typeof db !== 'undefined') {
+        await db.collection('therapists').doc(String(id)).update({ status });
+        await refreshCache();
     }
 }
 
@@ -658,20 +670,20 @@ function loadTherapistsTable() {
     `).join('');
 }
 
-function approveTherapist(id) {
-    updateTherapistStatus(id, 'approved');
+async function approveTherapist(id) {
+    await updateTherapistStatus(id, 'approved');
     showNotification('تم تفعيل المعالج', 'success');
     loadTherapistsTable();
 }
 
-function rejectTherapist(id) {
-    updateTherapistStatus(id, 'rejected');
+async function rejectTherapist(id) {
+    await updateTherapistStatus(id, 'rejected');
     showNotification('تم رفض طلب التسجيل', 'error');
     loadTherapistsTable();
 }
 
-function suspendTherapist(id) {
-    updateTherapistStatus(id, 'suspended');
+async function suspendTherapist(id) {
+    await updateTherapistStatus(id, 'suspended');
     showNotification('تم تعطيل حساب المعالج', 'error');
     loadTherapistsTable();
 }
@@ -796,8 +808,9 @@ function showNotification(message, type = 'info') {
 }
 
 // ========== INIT ==========
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     checkAdminAuth();
+    await refreshCache();
     updateAdminBadge();
 
     document.addEventListener('click', function (e) {
